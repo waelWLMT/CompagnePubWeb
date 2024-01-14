@@ -1,0 +1,220 @@
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bgBreadCrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/tableauDeBord']">Home</a></li>
+        <li class="breadcrumb-item"><a href="#" [routerLink]="['/Nve_Compagne']">Compagne</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Compagnes</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card mb-4 CompagneCard">
+      <div class="card-header">
+        <i class="fas fa-chart-area mr-1"></i>
+        Recherche campagne
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+
+            <form #searchForm="ngForm" (ngSubmit)="searchCampaign(searchForm)" novalidate autocomplete="off">
+
+              <fieldset class="border p-2">
+                <legend class="w-auto" style="color: gray; font-size: 15px;">&nbsp; Recherche &nbsp;</legend>
+
+                <!-- Periode -->
+                <div class="form-row">
+
+                  <div class="form-group col-md">
+                    <label class="control-label" for="name">Période du</label>
+                    <input type="date" class="form-control username" [(ngModel)]="searchStartDate" id="searchStartDate"
+                      placeholder="date début" name="searchStartDate">
+                  </div>
+
+                  <div class="form-group col-md">
+                    <label class="control-label" for="price">Au</label>
+                    <input type="date" class="form-control username" [(ngModel)]="searchEndDate" id="searchEndDate"
+                      placeholder="date fin" name="searchEndDate">
+                  </div>
+
+                  <div class="form-group col-md" *ngIf="currentUser.roleId == 2">
+                    <label class="control-label">Client</label>
+                    <input type="text" class="form-control username" [ngModel]="userClientName" id="selectedClient"
+                      placeholder="Client" name="selectedClient" readonly>
+                  </div>
+
+                  <div class="form-group col-md" *ngIf="currentUser.roleId != 2">
+                    <label class="control-label">Client</label>
+                    <ng-select [items]="clientList" bindLabel="name" bindValue="id" [multiple]="false"
+                      placeholder="Choisir un client" [(ngModel)]="selectedClientId" id="clientId" name="clientId">
+                    </ng-select>
+                  </div>
+
+
+                </div>
+
+                <!-- Client et region -->
+                <div class="form-row">
+
+                  <div class="form-group col-md">
+                    <label class="control-label">Région</label>
+                    <ng-select [items]="regionsList" bindLabel="name" bindValue="id" [multiple]="false"
+                      placeholder="Choisir une zone ou une région" [(ngModel)]="selectedRegionId" name="regionId"
+                      id="regionId" (change)="getTownsBySelectedRegion()">
+                    </ng-select>
+                  </div>
+
+                  <div class="form-group col-md">
+                    <label class="control-label">Ville</label>
+                    <ng-select [items]="townsList" bindLabel="townWording" bindValue="id" [multiple]="true"
+                      placeholder="Choisir la ou les villes cible(s)" [(ngModel)]="selectedTownsIds" name="townIds"
+                      id="townIds">
+                    </ng-select>
+                  </div>
+
+                  <div class="form-group col-md">
+                    <label class="control-label">Type de business</label>
+                    <ng-select [items]="businessTypeList" bindLabel="code" bindValue="id" [multiple]="true"
+                      placeholder="Choisir la ou les types de business cible(s)" [(ngModel)]="selectedBusnissTypes"
+                      name="businessTypeIds" id="businessTypeIds">
+                    </ng-select>
+                  </div>
+
+
+                </div>
+
+                <!-- Ville et type de business -->
+                <div class="form-row">
+
+
+                </div>
+
+                <button type="submit" class="btn btn-primary submitBtn float-right" style="margin-top: 2%;">
+                  <i class="fas fa-search"></i> Chercher
+                  <!--<i class="fas fa-save"></i> -->
+                </button>
+
+              </fieldset>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card mb-4 CompagneCard">
+
+      <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Campagnes publicitaire
+      </div>
+
+      <div class="card-body">
+
+        <div class="row">
+          <div class="col-md table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+
+              <thead>
+                <tr style="text-align: center;">
+                  <th>Titre</th>
+                  <th>Client</th>
+                  <th>Région</th>
+                  <th>Villes</th>
+                  <th>Coût total</th>
+                  <th>Etat</th>
+                  <th>Places</th>
+                  <th>Détails</th>
+                  <th>Devis</th>
+
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <tr *ngIf="showList && campaignsList.length == 0">
+                  <td colspan="9" style="text-align: center;">Aucun élément à afficher</td>
+                </tr>
+
+                <tr *ngIf="!showList">
+                  <td colspan="9" style="text-align: center;">
+                    <div class="spinner-grow" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                    <div>
+                      <p>Loading...</p>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr
+                  *ngFor="let campaign of campaignsList | paginate: { itemsPerPage: nbrItemPerPage, currentPage: page }">
+                  <td>{{ campaign.title }}</td>
+                  <td>{{ campaign.customer.name }}</td>
+                  <td>{{ campaign.region.name }}</td>
+                  <td>
+                    <span class="badge badge-light" style="margin-right: 3%"
+                      *ngFor="let campaignTown of campaign.campaignTowns | slice:0:4;">
+                      {{ campaignTown.city }}
+                    </span>
+                  </td>
+                  <td> {{ campaign.totalCost | currency:'EUR':'symbol':'3.2-2':'fr' }}</td>
+                  <td style="text-align: center;">
+
+                    <small>
+                      <span style="font-size: 12px;" [ngClass]="{ 'badge': true, 'badge-pill': true,
+                        'badge-secondary': campaign.campaignState ===1,
+                        'badge-info': campaign.campaignState === 2,
+                        'badge-warning': campaign.campaignState === 3,
+                        'badge-success': campaign.campaignState === 4,
+                        'badge-danger': campaign.campaignState === 5 }">
+                        {{ getCampaignStateDescription(campaign.campaignState) }}
+                      </span>
+                    </small>
+
+                  </td>
+
+                  <td class="linkBtn" style="text-align: center; cursor: pointer; "
+                    (click)='goToCampaignBusinessList(campaign)'>
+                    <i class="fas fa-pencil-alt" [hidden]="campaign.campaignState !== 3"></i>
+                  </td>
+
+                  <td class="linkBtn" style="text-align: center; cursor: pointer; " (click)='goTo(campaign, true)'>
+                    <i class="fas fa-info-circle"></i>
+                  </td>
+
+                  <td class="linkBtn" style="text-align: center; cursor: pointer;" (click)='goTo(campaign, false)'>
+                    <i class="fas fa-receipt"></i>
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-md">
+            <pagination-controls (pageChange)="page = $event" class="float-right"></pagination-controls>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

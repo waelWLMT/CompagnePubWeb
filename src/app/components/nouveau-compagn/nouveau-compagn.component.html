@@ -1,0 +1,206 @@
+<!--<agm-map [zoom]="13" [usePanning]="true" [latitude]="10.3207886" [longitude]="123.90250049999997">
+    <agm-marker [latitude]="10.3207886" [longitude]="123.90250049999997"></agm-marker>
+</agm-map>-->
+
+
+<div class="row">
+    <div class="col">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bgBreadCrumb">
+                <li class="breadcrumb-item"><a [routerLink]="['/tableauDeBord']">Home</a></li>
+                <li class="breadcrumb-item"><a href="#" [routerLink]="['/Nve_Compagne']">Gestion Compagne</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Nouvelle Compagne</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<!--Nouveau Type Compagne-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4 CompagneCard">
+            <div class="card-header">
+                <i class="fas fa-chart-area mr-1"></i>
+                Nouvelle Compagne
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form #form="ngForm" (ngSubmit)="submit(form)" novalidate autocomplete="off">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <!--Line 1-->
+                                    <div class="form-row ">
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="title">Titre</label>
+                                            <input type="text" class="form-control username" ngModel id="title"
+                                                placeholder="titre de Compagne" name="title" required [ngClass]="{
+                                                'is-valid': form.submitted && form.controls.title.valid ,
+                                                'is-invalid': form.submitted && form.controls.title.invalid
+                                              }">
+                                        </div>
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="goal">Objectif</label>
+                                            <input type="text" class="form-control username" ngModel id="goal"
+                                                placeholder="Objectif de la Compagne" name="goal" required [ngClass]="{
+                                                'is-valid': form.submitted && form.controls.goal.valid ,
+                                                'is-invalid': form.submitted && form.controls.goal.invalid
+                                              }">
+                                        </div>
+
+                                    </div>
+
+                                    <!--Line 2-->
+                                    <div class="form-row">
+
+                                        <div class="form-group col-md" *ngIf="currentUser.roleId == 2">
+                                            <label class="control-label required">Client</label>
+                                            <input type="text" class="form-control username" [ngModel]="userClientName" id="selectedClient"
+                                                placeholder="Client" name="selectedClient" readonly >
+                                        </div>
+                                        
+                                        <div class="form-group col-md" *ngIf="currentUser.roleId != 2">
+                                            <label class="control-label required">Client</label>
+                                            <ng-select
+                                                [items]="clientList" bindLabel="name" bindValue="id"
+                                                [multiple]="false" placeholder="Choisir un client"
+                                                [(ngModel)]="selectedClientId" id="clientId" name="clientId" required                                                
+                                                [ngClass]="{
+                                                    'is-valid': form.submitted && form.controls.clientId.valid,
+                                                    'is-invalid': form.submitted && form.controls.clientId.invalid
+                                                  }">
+                                            </ng-select>
+                                        </div>
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="forecastBudget">Budget
+                                                prévisionnel</label>
+                                            <input type="number" class="form-control username" ngModel
+                                                id="forecastBudget" placeholder="Budget prévisionnel"
+                                                name="forecastBudget" required [ngClass]="{
+                                                    'is-valid': form.submitted && form.controls.forecastBudget.valid,
+                                                    'is-invalid': form.submitted && form.controls.forecastBudget.invalid
+                                                  }">
+                                        </div>
+
+                                    </div>
+
+                                    <!--Line 3-->
+                                    <div class="form-row">
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required">Région</label>
+                                            <ng-select [items]="regionsList" bindLabel="name" bindValue="id"
+                                                [multiple]="false" placeholder="Choisir une zone ou une région"
+                                                [(ngModel)]="selectedRegionId" name="regionId" id="regionId"
+                                                (change)="getTownsBySelectedRegion()" required [ngClass]="{
+                                                    'is-valid': form.submitted && form.controls.regionId.valid,
+                                                    'is-invalid': form.submitted && form.controls.regionId.invalid
+                                                  }">
+                                            </ng-select>
+                                        </div>
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required">Ville</label>
+                                            <ng-select [items]="townsList" bindLabel="townWording" bindValue="id"
+                                                [multiple]="true" placeholder="Choisir la ou les villes cible(s)"
+                                                [(ngModel)]="selectedTownsIds" name="townIds" id="townIds" required
+                                                [ngClass]="{
+                                                    'is-valid': form.submitted && form.controls.townIds.valid,
+                                                    'is-invalid': form.submitted && form.controls.townIds.invalid
+                                                  }">
+                                            </ng-select>
+                                        </div>
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required">Type de business</label>
+                                            <ng-select [items]="businessTypeList" bindLabel="code" bindValue="mapCode"
+                                                [multiple]="true"
+                                                placeholder="Choisir la ou les types de business cible(s)"
+                                                [(ngModel)]="selectedBusnissTypes" name="businessTypeIds"
+                                                id="businessTypeIds" required [ngClass]="{
+                                                    'is-valid': form.submitted && form.controls.businessTypeIds.valid,
+                                                    'is-invalid': form.submitted && form.controls.businessTypeIds.invalid
+                                                  }">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+
+                                    <!--Line 4-->
+                                    <div class="form-row">
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required">Type de produit</label>
+                                            <ng-select [items]="productTypeList" bindLabel="name" bindValue="id"
+                                                [multiple]="true" placeholder="Choisir un produit"
+                                                [(ngModel)]="selectedProductTypeIds" name="productTypeId"
+                                                id="productTypeId" b>
+                                            </ng-select>
+                                        </div>
+
+                                        <!--<div class="form-group col-md">
+                                            <label class="control-label required" for="penetrationRate">Taux de Pénetration</label>
+                                            <input type="number" class="form-control username" ngModel
+                                                id="penetrationRate" placeholder="Taux de pénétration par type commerce"
+                                                name="penetrationRate" required>
+                                        </div>-->
+
+
+                                        <div class="form-group col-md">
+                                            <label class="contorl-label required">Date d'exécution</label>
+                                            <input type="date" class="form-control username" [(ngModel)]="dateExecution"
+                                                name="dateExecution" id="dateExecution" required [ngClass]="{
+                                                    'is-valid': form.submitted && form.controls.dateExecution.valid,
+                                                    'is-invalid': form.submitted && form.controls.dateExecution.invalid
+                                                  }">
+                                        </div>
+
+                                    </div>
+
+                                    <!--Line 5-->
+                                    <div class="form-row">
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="lastName">Description</label>
+                                            <textarea class="form-control" placeholder="Description" ngModel
+                                                id="description" name="description" rows="6" required
+                                                [ngClass]="{
+                                                    'is-valid': form.submitted && form.controls.description.valid,
+                                                    'is-invalid': form.submitted && form.controls.description.invalid
+                                                  }">
+                                                </textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+
+                                <div class="col-md-12 BtnsCol">
+
+                                    <button type="reset" class="btn resetBtn" style="margin-right: 10px;">
+                                        Anuuler
+                                    </button>
+
+                                    <button type="submit" class="btn btn-primary submitBtn">
+                                        <i class="fas fa-save"></i> Valider
+                                    </button>
+
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

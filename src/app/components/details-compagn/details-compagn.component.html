@@ -1,0 +1,232 @@
+<div class="row">
+    <div class="col">
+        <nav aria-label="breadcrumb ">
+            <ol class="breadcrumb bgBreadCrumb">
+                <li class="breadcrumb-item"><a [routerLink]="['/tableauDeBord']">Home</a></li>
+                <li class="breadcrumb-item"><a href="#" [routerLink]="['/']">Compagnes</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Détails Compagne</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="card mb-4 CompagneCard">
+
+    <div class="card-header">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <i class="fas fa-table mr-1"></i> Détails Compagne
+            </div>
+
+            <div class="col-md-3">Etat:
+                <span *ngIf="displayDetails" style="margin-left: 2px; font-size: 15px;"
+                [ngClass]="{ 'badge': true, 'badge-pill': true,
+                      'badge-secondary': campaignState.stateId ===1,
+                      'badge-info': campaignState.stateId === 2,
+                      'badge-warning': campaignState.stateId === 3,
+                      'badge-success': campaignState.stateId === 4,
+                      'badge-danger': campaignState.stateId === 5 }"               
+                
+                >{{ campaignState.stateDescription }} </span>
+            </div>
+
+
+            <div class="col-md-3" *ngIf="campaign != undefined">
+                Mon Budget:
+                <span class="badge badge-pill badge-light" style="margin-left: 2px; font-size: 15px;">{{
+                    campaign.forecastBudget | currency:'EUR':'symbol':'3.2-2':'fr' }}</span>
+            </div>
+
+            <div class="col-md-3" *ngIf="campaign != undefined">
+                Coût total:
+                <span class="badge badge-pill badge-light" style="margin-left: 2px; font-size: 15px;">{{
+                    campaign.totalCost | currency:'EUR':'symbol':'3.2-2':'fr' }}</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card-body" *ngIf="!displayDetails">
+        <div class="row">
+            <div class="col" style="text-align: center;">
+                <div class="spinner-border" role="status" style="color: gray;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div style="color: gray;">
+                    Chargement en cours ...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body" *ngIf="displayDetails">
+
+        <!-- Line 1-->
+        <div class="row">
+
+            <div class="col-md align-items">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Titre</span>
+                    <span class="float-right detailsColValue">{{ campaign.title }}</span>
+                </div>
+            </div>
+
+            <div class="col-md align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Date d'execution</span>
+                    <span class="float-right detailsColValue">{{ campaign.executionDate | date: 'dd/MM/yyyy'}}</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Line 2-->
+        <div class="row" style="margin-top: 1%;">
+            <div class="col-md align-items">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Region</span>
+                    <span class="float-right detailsColValue">{{ campaign.region.name }}</span>
+                </div>
+            </div>
+
+            <div class="col-md align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Taux de pénétration</span>
+                    <span class="float-right detailsColValue">{{ campaign.penetraionRate }}%</span>
+                </div>
+            </div>
+        </div>
+
+        <!--Line 3-->
+        <div class="row" style="margin-top: 1%;">
+            <div class="col-md align-items">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Villes</span>  
+                    <span class="float-right detailsColValue" style="font-size: 14px;"
+                        *ngFor="let detailedTown of detailedTowns | slice:0:3; let i=index">
+                        {{ detailedTown.town.city }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Nombre de ville</span>
+                    <span class="float-right detailsColValue">{{ detailedTowns.length }}</span>
+                </div>
+            </div>
+        </div>      
+
+         <!--Line 4-->
+         <div class="row" style="margin-top: 1%;">
+            <div class="col-md align-items">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Type de business:</span>  
+
+                    <span class="float-right detailsColValue" style="font-size: 14px;"
+                    *ngFor="let business of campaign.campaignBusinessTypes | slice:0:3; let i=index">
+                    {{ business.code }}
+                </span>
+                    
+                </div>
+            </div>
+
+            <div class="col-md align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Nombre Type de business</span>
+                    <span class="float-right detailsColValue">{{ campaign.campaignBusinessTypes.length }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!--Line 5 -->
+        <div class="row" style="margin-top: 1%;">
+            <div class="col-md align-items">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Coût total</span>  
+                    <span class="float-right detailsColValue" style="font-size: 14px;">
+                        {{ campaign.totalCost | currency:'EUR':'symbol':'3.2-2':'fr' }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Coût de business:</span>
+                    <span class="float-right detailsColValue">{{ countBusinessCost() | currency:'EUR':'symbol':'3.2-2':'fr' }}</span>
+                </div>
+            </div>
+        </div>
+
+         <!--Line 6 -->
+         <div class="row" style="margin-top: 1%;">
+            <div class="col-md align-items">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Mon Budget</span>  
+                    <span class="float-right detailsColValue" style="font-size: 14px;">
+                        {{ campaign.forecastBudget | currency:'EUR':'symbol':'3.2-2':'fr' }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Etat de la compagne</span>
+                    <span class="float-right detailsColValue">{{ campaignState.stateDescription }}</span>
+                </div>
+            </div>
+        </div>
+
+         <!--Line 7 -->
+         <div class="row" style="margin-top: 1%;">
+
+            <div class="col-md align-items">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Objectif</span>  
+                    <span class="float-right detailsColValue" style="font-size: 14px;">
+                        {{ campaign.goal }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md align-items">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Description</span>  
+                    <span class="detailsColValue" style="font-size: 14px; margin-left: 5%;">
+                        {{ campaign.description }}
+                    </span>
+                </div>
+            </div>            
+
+        </div>  
+
+         <!--Line 8 -->
+         <div class="row" style="text-align: right; margin-top: 3%;">
+
+            <div class="col-md"></div>
+
+            <div class="col-md-2" *ngIf="campaign.campaignState === 3 && currentUser.roleId === 1">
+                <button type="button" class="btn btn-success btn-sm btn-block" (click)="closeCampaign()">
+                    Clôturer compagne
+                </button>
+            </div>
+
+            <div class="col-md-2" *ngIf="campaign.campaignState === 2 && currentUser.roleId === 1">
+                <button type="button" class="btn btn-success btn-sm btn-block" (click)="launchRealization()">
+                    Lancer réalisation
+                </button>
+            </div> 
+
+            <div class="col-md-2">
+                <button type="button" class="btn btn-success btn-sm btn-block" (click)="dupliquerCompagne()" *ngIf="campaign.campaignState === 4">
+                    Dupliquer compagne
+                </button>
+            </div>            
+        </div>
+
+    </div>
+
+</div>
+

@@ -1,0 +1,170 @@
+<div class="row" style="margin-top: 20px;" *ngIf="false">
+  <div class="col-md">
+    <h3>Produits de la compagne</h3>
+  </div>
+</div>
+
+<div class="row" style="margin-top: 20px;">
+  <div class="col-md">
+    <div class="form-row">
+      
+      <div class="form-group col-md-4">
+        <label class="control-label required">Type de produit</label>
+        <ng-select [items]="productTypeList" bindLabel="name" bindValue="id" [multiple]="false"
+          placeholder="Ajouter un produit à la compagne" [(ngModel)]="selectedProductTypeId" name="productTypeId">
+        </ng-select>
+      </div>
+
+      <div class="form-group col-md">
+        <button type="button" class="btn btn-primary submitBtn" style="margin-top: 30px;" (click)="addCampaignProducts()" [disabled]="selectedProductTypeId == undefined">
+          <i class="fa fa-plus" aria-hidden="true"></i> Ajouter
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="row table-responsive">
+  <div class="col">
+
+    <table class="table table-bordered" width="100%" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Type de produit</th>
+          <th style="width: 30%;">Description</th>
+          <th>Nombre de produit par Business</th>
+          <th>Prix unitaire initial</th>
+          <th>Prix unitaire final</th>
+          <th style="width: 5%; text-align: center;"></th>
+          <th style="width: 5%; text-align: center;"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngIf="campaignProducts != undefined && campaignProducts.length == 0">
+          <td colspan="7" style="text-align: center;">Aucun élément à afficher</td>
+        </tr>
+
+
+        <tr *ngFor="let product of campaignProducts ">
+          <td>{{ product.productType.name }}</td>
+          <td style="width: 30%;">{{ product.productType.description }}</td>
+          <td>{{ product.nbrProductPerBusiness }}</td>
+
+          <td>{{ product.productType.price | currency:'EUR':'symbol':'3.2-2' :'fr'}}</td>
+          <td>{{ product.finalUnitPrice | currency:'EUR':'symbol':'3.2-2':'fr' }}</td>
+
+          <td class="deleteIcon" style="cursor: pointer;" (click)='deleteProduct(product.productTypeId)'>
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </td>
+
+          <td class="linkBtn" style="width: 5%; text-align: center; cursor: pointer;" data-toggle="modal"
+            data-target="#modalCart" (click)='setModalProduct(product)'>
+            <i class="fas fa-edit"></i>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<!-- Modal: modalCart -->
+<div class="modal fade" id="modalCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Edit Produit</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+
+        <div class="row" *ngIf="modalProduct != undefined">
+          <div class="col-md-12">
+            <form novalidate>
+
+              <div class="row">
+                <div class="col-md-12">
+
+                  <div class="form-row ">
+
+                    <div class="form-group col-md">
+                      
+                      <label class="control-label required" class="control-label required" for="name">Type de produit</label>
+                      <input type="text" class="form-control username" [(ngModel)]="modalProduct.productType.name" id="name" placeholder="Nom Client" name="name" required disabled>
+                   
+                    </div>
+
+                  </div>
+
+
+                  <div class="form-row ">
+
+                    <div class="form-group col-md">
+
+                      <label class="control-label required" for="taxIdNumber">Prix unitaire par défaut</label>
+                      <input type="text" class="form-control username" [(ngModel)]="modalProduct.productType.price"
+                        id="defaultUnitPrice" name="defaultUnitPrice" required disabled>
+
+                    </div>
+
+                  </div>
+
+                  <div class="form-row ">
+
+                    <div class="form-group col-md">
+                      <label class="control-label required" for="telNumber">Nombre de produit par Business</label>
+                      <input type="number" class="form-control username"
+                        [(ngModel)]="modalProduct.nbrProductPerBusiness" id="nbrProductPerBusiness"
+                        placeholder="Numéro de téléphone" name="telNumber" required>
+                    </div>
+
+                  </div>
+
+                  <div class="form-row " [hidden]="currentUser.roleId == 2">
+
+                    <div class="form-group col-md">
+                      <label class="control-label required" for="mail">Prix unitaire final</label>
+                      <input type="number" class="form-control" [(ngModel)]="modalProduct.finalUnitPrice"
+                        id="finalUnitPrice" placeholder="Prix unitair final" name="finalUnitPrice" required>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </form>
+
+          </div>
+
+        </div>
+
+
+      </div>
+      <!--Footer-->
+      <div class="modal-footer">
+        <!--btn-outline-primary-->
+        <button type="button" class="btn resetBtn" data-dismiss="modal" (click)="modalProduct = undefined">
+          Anuuler
+        </button>
+        <!--submitBtn-->
+        <button class="text-white" data-dismiss="modal" aria-label="Close" class="btn btn-primary submitBtn"
+          (click)="updateCampaignProduct()">
+          <i class="fas fa-save"></i> Valider
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal: modalCart -->

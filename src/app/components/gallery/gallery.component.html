@@ -1,0 +1,31 @@
+<!--Carousel Wrapper-->
+<mdb-carousel *ngIf="showGallery && gallery.length > 0" [isControls]="true" class="carousel slide carousel-fade"
+  [animation]="'fade'">
+
+  <mdb-carousel-item *ngFor="let photo of gallery; let indexOfelement=index;">
+
+    <div class="view w-100">
+      <img class="mx-auto d-block w-100 h-100" [src]="filesSite + photo.fileFolder + photo.imageName" [alt]="photo.imageName">
+      <div class="mask rgba-black-light waves-light" mdbWavesEffect></div>
+    </div>
+
+    <div class="carousel-caption">
+
+      <h3 class="h3-responsive">{{ photo.imageName.slice(0,photo.imageName.indexOf('.'))}}</h3>
+      <p>Image N° {{ indexOfelement + 1 }}</p>
+
+    </div>
+
+  </mdb-carousel-item>
+
+</mdb-carousel>
+
+<p *ngIf="showGallery && gallery.length == 0">
+  Aucun photo à afficher
+</p>
+
+<p *ngIf="!showGallery" style="color: gray;">
+  Chargement en cours ...
+</p>
+
+<!--/.Carousel Wrapper-->

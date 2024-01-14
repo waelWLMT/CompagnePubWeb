@@ -1,0 +1,216 @@
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bgBreadCrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/tableauDeBord']">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Gestion Client</a></li>        
+        <li class="breadcrumb-item active" aria-current="page">Nouveau Client</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<!--Nouveau Client Formulaire-->
+<div class="row">
+  <div class="col-md-12">
+    <div class="card mb-4 CompagneCard">
+      <div class="card-header">
+        <i class="fas fa-chart-area mr-1"></i>
+        Nouveau Client
+      </div>
+      <div class="card-body">
+
+        <div class="row">
+
+          <div class="col-md-12">
+
+            <form #clientForm="ngForm" (ngSubmit)="ajouterClient(clientForm)" novalidate autocomplete="off">
+              <!-- Données Client  -->
+              <fieldset class="form-group">
+
+                <div class="row">
+                  <legend class="col-md-2 col-form-label pt-0 legendStyle">Données Client</legend>
+                  <div class="col-md-10">
+
+                    <div class="form-row ">
+
+                      <div class="form-group col-md-6">
+                        <label class="control-label required" class="control-label required" for="name">Nom Client</label>
+                        <input type="text" class="form-control username" ngModel id="name" placeholder="Nom Client"name="name" required
+                        [ngClass]="{
+                                    'is-valid': clientForm.submitted && clientForm.controls.name.valid ,
+                                    'is-invalid': clientForm.submitted && clientForm.controls.name.invalid
+                                  }" 
+                        >
+                      </div>
+
+                      <div class="form-group col-md-6">
+                        <label class="control-label required" for="taxIdNumber">Matricule fiscal</label>
+                        <input type="text" class="form-control username" ngModel id="taxIdNumber"  placeholder="Matricule fiscal" name="taxIdNumber" required
+                        [ngClass]="{
+                          'is-valid': clientForm.submitted && clientForm.controls.taxIdNumber.valid ,
+                          'is-invalid': clientForm.submitted && clientForm.controls.taxIdNumber.invalid
+                        }" >
+                      </div>
+
+                    </div>
+
+                    <div class="form-row ">
+
+                      <div class="form-group col-md-6">
+                        <label class="control-label required" for="telNumber">Numéro de téléphone</label>
+                        <input type="text" class="form-control username" ngModel id="telNumber" placeholder="Numéro de téléphone" name="telNumber" required
+                        [ngClass]="{
+                          'is-valid': clientForm.submitted && clientForm.controls.telNumber.valid ,
+                          'is-invalid': clientForm.submitted && clientForm.controls.telNumber.invalid
+                        }">
+                      </div>
+
+                      <div class="form-group col-md-6">
+                        <label class="control-label required" for="mail">Email:</label>
+                        <input type="email" class="form-control email" ngModel id="mail" placeholder="Email" name="mail" required email
+                        [ngClass]="{
+                          'is-valid': clientForm.submitted && clientForm.controls.mail.valid ,
+                          'is-invalid': clientForm.submitted && clientForm.controls.mail.invalid
+                        }">
+                      </div>
+
+                    </div>
+
+
+                  </div>
+                </div>
+
+              </fieldset>
+
+
+              <!-- Adresse Client -->
+              <fieldset class="form-group">
+                <div class="row">
+                  <legend class="col-md-2 col-form-label pt-0 legendStyle">Adresse Client</legend>
+                  <div class="col-md-10">
+                    <div class="form-row">
+
+                      <div class="form-group col-md-4">
+                        <label class="control-label required" for="street">Rue</label>
+                        <input type="text" class="form-control username"  ngModel id="street" placeholder="Rue" name="street" required
+                        [ngClass]="{
+                          'is-valid': clientForm.submitted && clientForm.controls.street.valid ,
+                          'is-invalid': clientForm.submitted && clientForm.controls.street.invalid
+                        }">
+                      </div>
+
+                      <div class="form-group col-md-4">
+                        <label class="control-label required" for="townName">Cité</label>
+                        <input type="text" class="form-control email" ngModel id="townName" placeholder="Cité" name="townName" required 
+                        [ngClass]="{
+                          'is-valid': clientForm.submitted && clientForm.controls.townName.valid ,
+                          'is-invalid': clientForm.submitted && clientForm.controls.townName.invalid
+                        }">
+                      </div>
+
+                      <div class="form-group col-md-4">
+                        <label class="control-label required" for="countryName">Pays</label>
+                        <input type="text" class="form-control email" ngModel id="countryName" placeholder="Pays" name="countryName" required
+                        [ngClass]="{
+                          'is-valid': clientForm.submitted && clientForm.controls.countryName.valid ,
+                          'is-invalid': clientForm.submitted && clientForm.controls.countryName.invalid
+                        }">
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+              </fieldset>
+
+
+              <div class="row"> <!--style="text-align: right;"-->
+                <div class="col-md-12 BtnsCol"  >                  
+                  
+                  <button type="reset" class="btn resetBtn" style="margin-right: 10px;" >
+                    Anuuler
+                  </button>
+
+                  <button type="submit" class="btn btn-primary submitBtn">
+                    <i class="fas fa-save"></i> Valider
+                  </button>
+
+                </div>
+              </div>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <!-- List Client-->
+    <div class="card mb-4 CompagneCard">
+
+      <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Clients
+      </div>
+
+      <div class="card-body">
+
+        <div class="table-responsive">
+          <!--<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">-->
+          <table class="table table-bordered" width="100%" cellspacing="0">
+
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Taxe Id Number</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th>Adresse</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let customer of customersList | paginate: { itemsPerPage: nbrItemPerPage, currentPage: page } ">
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.taxIdNumber }}</td>
+                <td>{{ customer.mail }}</td>
+                <td>{{ customer.telNumber }}</td>
+                <td>
+                  {{ customer.address.street }}
+                  {{ customer.address.townName }}
+                  {{ customer.address.countryName }}
+                </td>
+
+              </tr>
+            </tbody>
+
+            <tfoot *ngIf="customersList && customersList.length >= 10">
+              <tr>
+                <th>Name</th>
+                <th>Taxe Id Number</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th>Adresse</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="row">
+          <div class="col-md">
+            <pagination-controls (pageChange)="page = $event" class="float-right"></pagination-controls>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
