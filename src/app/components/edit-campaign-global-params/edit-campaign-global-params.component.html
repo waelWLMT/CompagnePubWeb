@@ -1,0 +1,97 @@
+<div class="row" style="margin-top: 20px;">
+    <div class="col-md">
+        <form #form="ngForm" (ngSubmit)="updateCampaignGlobalParameters()" novalidate autocomplete="off">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!--Line 1-->
+                    <div class="form-row ">
+
+                        <div class="form-group col-md">
+                            <label class="control-label required" for="title">Titre</label>
+                            <input type="text" class="form-control username" [(ngModel)]="campaignGlobalParams.title"
+                                id="title" placeholder="titre de Compagne" name="title" required>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label class="control-label required" for="goal">Objectif</label>
+                            <input type="text" class="form-control username" [(ngModel)]="campaignGlobalParams.goal"
+                                id="goal" placeholder="Objectif de la Compagne" name="goal" required>
+                        </div>
+
+                    </div>
+
+                    <!--Line 2-->
+                    <div class="form-row">
+
+                        <!--<div class="form-group col-md">
+                            <label class="control-label required" for="forecastBudget">Budget prévisionnel</label>
+                            <input type="number" class="form-control username"
+                             [(ngModel)]="campaignGlobalParams.forecastBudget" id="forecastBudget"
+                                placeholder="Budget prévisionnel" name="forecastBudget" required>
+                        </div>-->
+
+                        <div class="form-group col-md">
+                            <label class="control-label required" for="forecastBudget">Taux de pénétration %</label>
+                            <input type="number" class="form-control username"
+                                [(ngModel)]="campaignGlobalParams.penetraionRate" id="penetrationRate"
+                                placeholder="Taux de pénétration" name="penetrationRate" required>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label class="contorl-label required">Date d'exécution</label>
+                            <input type="date" class="form-control username"
+                                [(ngModel)]="campaignGlobalParams.executionDate" name="dateExecution"
+                                id="dateExecution">
+                        </div>
+
+                    </div>
+
+                    <!--Line 3-->
+                    <div class="form-row">
+                        <div class="form-group col-md">
+                            <label class="control-label required" for="lastName">Description</label>
+                            <textarea class="form-control" placeholder="Description"
+                                [(ngModel)]="campaignGlobalParams.description" id="description" name="description"
+                                rows="6" required></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <!--<div class="col-md">
+                    <button type="button" class="btn btn-success btn-sm" (click)="gotToDetailsPage()">
+                        <i class="fas fa-share-square"></i>
+                        Valider compagne
+                    </button>
+                </div>-->
+
+                <div class="col-md">
+                    <button [hidden]="campaignGlobalParams.totalCost == 0" type="button" class="btn btn-success btn-sm" (click)="gotToDevisPage()">
+                        <i class="fas fa-share-square"></i>
+                        Consulter Devis campagne
+                    </button>
+                </div>
+
+                <div class="col-md-6 BtnsCol">
+
+                    <button type="reset" class="btn resetBtn" style="margin-right: 10px;">
+                        Anuuler
+                    </button>    
+
+                    <button type="submit" class="btn btn-primary submitBtn">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+
+                                  
+
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,133 @@
+<div class="row" style="margin-top: 20px;">
+  <div class="col-md">
+    <div class="form-row" *ngIf="displaytownsToAdd">
+
+      <div class="form-group col-md-4">
+        <label class="control-label required">Ville</label>
+        <ng-select [items]="townsList" bindLabel="townWording" bindValue="id" [multiple]="false"
+          placeholder="Choisir la ou les villes cible(s)" [(ngModel)]="selectedTownId" name="townIds">
+        </ng-select>
+      </div>
+
+      <div class="form-group col-md">
+        <button type="button" class="btn btn-primary submitBtn" style="margin-top: 30px;" (click)="addCampaignTowns()"
+          [disabled]="selectedTownId == undefined">
+          <i class="fa fa-plus" aria-hidden="true"></i> Ajouter
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row table-responsive">
+  <div class="col">
+
+    <table class="table table-bordered" width="100%" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Ville</th>
+          <th>Taux de pénétration</th>
+          <th>Nombre de business</th>
+          <th>Coût</th>
+          <th></th>
+
+          <th style="width: 5%; text-align: center;"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngIf="detailedCampaignTownsList != undefined && detailedCampaignTownsList.length == 0">
+          <td colspan="6" style="text-align: center;">Aucun élément à afficher</td>
+        </tr>
+
+
+        <tr *ngFor="let detailedTown of detailedCampaignTownsList">
+
+          <td>{{ detailedTown.town.city }}</td>
+          <td>{{ detailedTown.penetrationRate }}%</td>
+          <td>{{ detailedTown.nbrBusinesses }}</td>
+          <td>{{ detailedTown.townCost | currency:'EUR':'symbol':'3.2-2':'fr' }}</td>
+
+          <td class="deleteIcon" style="cursor: pointer;" (click)='deleteCampaigntown(detailedTown.town)'>
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </td>
+
+          <td class="linkBtn" style="width: 5%; text-align: center; cursor: pointer;" data-toggle="modal"
+            data-target="#modalSelectedTown" (click)='setModalTown(detailedTown)'>
+            <i class="fas fa-map"></i>
+          </td>
+
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+</div>
+
+<!-- Modal: modalCart modal fade-->
+<div class="modal fade" id="modalSelectedTown" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel" *ngIf="selectedTown != undefined">{{ selectedTown.town.city }}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <!--Body-->
+      <div class="modal-body" *ngIf="selectedTown != undefined">
+
+
+        <div class="row">
+
+          <div class="col-md-3">
+            <label>Nombre de business:</label>
+          </div>
+
+          <div class="col-md-3">
+            <p>{{ selectedTown.nbrBusinesses }}</p>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-3">
+            <label>Coût:</label>
+          </div>
+
+          <div class="col-md-3">
+            <p>{{ selectedTown.townCost }}</p>
+          </div>
+
+        </div>
+
+        <!-- Display town in map-->
+        <div class="row">
+          <app-campaign-town-details [center]="centerMapPosition" [palcesList]="placesList">
+          </app-campaign-town-details>
+        </div>
+
+      </div>
+      <!--Footer-->
+      <div class="modal-footer">
+        <!--btn-outline-primary  (click)="modalProduct = undefined" -->
+        <button type="button" class="btn resetBtn" data-dismiss="modal">
+          Anuuler
+        </button>
+        <!--submitBtn  (click)="updateCampaignProduct()"-->
+        <button class="text-white" data-dismiss="modal" aria-label="Close" class="btn btn-primary submitBtn">
+          <i class="fas fa-save"></i> Valider
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal: modalCart -->

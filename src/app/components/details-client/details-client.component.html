@@ -1,0 +1,251 @@
+<div class="row">
+    <div class="col">
+        <nav aria-label="breadcrumb ">
+            <ol class="breadcrumb bgBreadCrumb">
+                <li class="breadcrumb-item"><a [routerLink]="['/tableauDeBord']">Home</a></li>
+                <li class="breadcrumb-item"><a href="#" [routerLink]="['/Nve_Client']">Client</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Détails Client</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="card mb-4 CompagneCard">
+
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Détails Client
+    </div>
+
+    <div class="card-body" *ngIf="!displayDetails">
+        <div class="row">
+            <div class="col" style="text-align: center;">
+                <div class="spinner-border" role="status" style="color: gray;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div style="color: gray;">
+                    Chargement en cours ...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body" *ngIf="displayDetails">
+
+        <!-- Line 1-->
+        <div class="row">
+
+            <div class="col-md align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Nom Client</span>
+                    <span class="float-right detailsColValue">{{ customer.name }}</span>
+                </div>
+            </div>
+
+            <div class="col-md align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Matricule Fiscale</span>
+                    <span class="float-right detailsColValue">{{ customer.taxIdNumber }}</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Line 2-->
+        <div class="row">
+
+            <div class="col-md align-items">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Email</span>
+                    <span class="float-right detailsColValue">{{ customer.mail }}</span>
+                </div>
+            </div>
+
+            <div class="col-md align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Téléphone</span>
+                    <span class="float-right detailsColValue">{{ customer.telNumber }}</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Line 3 -->
+        <div class="row">
+
+            <div class="col-md align-items">
+
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Rue</span>
+                    <span class="float-right detailsColValue">{{ customer.address.street }}</span>
+                </div>
+
+            </div>
+
+            <div class="col-md align-items">
+
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Ville</span>
+                    <span class="float-right detailsColValue">{{ customer.address.townName }}</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Line 4 -->
+        <div class="row">
+            <div class="col-md align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Pays</span>
+                    <span class="float-right detailsColValue">{{ customer.address.countryName }}</span>
+                </div>
+            </div>
+
+            <div class="col-md align-items">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Nbr compagne</span>
+                    <span class="float-right detailsColValue">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 3%;">
+            <div class="col-md-12" style="text-align: right;">
+                <!-- Button trigger modal-->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCartClient"
+                    (click)="setModalCustomer()">
+                    <i class="fas fa-pencil-alt"></i> Modifier
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Modal: modalCart -->
+<div class="modal fade" id="modalCartClient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Edit Client</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+
+                <div class="row" *ngIf="displayDetails && modalCustomer != undefined">
+
+                    <div class="col-md-12">
+
+                        <form novalidate>
+
+                            <div class="row">
+
+                                <div class="col-md-12">
+
+                                    <div class="form-row">
+
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label required" class="control-label required"
+                                                for="name">Nom Client</label>
+                                            <input type="text" class="form-control username"
+                                                [(ngModel)]="modalCustomer.name" id="name" placeholder="Nom Client"
+                                                name="name" required>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label required" for="taxIdNumber">Matricule
+                                                fiscal</label>
+                                            <input type="text" class="form-control username"
+                                                [(ngModel)]="modalCustomer.taxIdNumber" id="taxIdNumber"
+                                                placeholder="Matricule fiscal" name="taxIdNumber" required>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-row ">
+
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label required" for="telNumber">Numéro de
+                                                téléphone</label>
+                                            <input type="text" class="form-control username"
+                                                [(ngModel)]="modalCustomer.telNumber" id="telNumber"
+                                                placeholder="Numéro de téléphone" name="telNumber" required>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label required" for="mail">Email:</label>
+                                            <input type="email" class="form-control email"
+                                                [(ngModel)]="modalCustomer.mail" id="mail" placeholder="Email"
+                                                name="mail" required email>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="form-row">
+
+                                        <div class="form-group col-md-4">
+                                            <label class="control-label required" for="street">Rue</label>
+                                            <input type="text" class="form-control username"
+                                                [(ngModel)]="modalCustomer.address.street" id="street" placeholder="Rue"
+                                                name="street" required>
+                                        </div>
+
+                                        <div class="form-group col-md-4">
+                                            <label class="control-label required" for="townName">Cité</label>
+                                            <input type="text" class="form-control email"
+                                                [(ngModel)]="modalCustomer.address.townName" id="townName"
+                                                placeholder="Cité" name="townName" required>
+                                        </div>
+
+                                        <div class="form-group col-md-4">
+                                            <label class="control-label required" for="countryName">Pays</label>
+                                            <input type="text" class="form-control email"
+                                                [(ngModel)]="modalCustomer.address.countryName" id="countryName"
+                                                placeholder="Pays" name="countryName" required>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+            <!--Footer-->
+            <div class="modal-footer">
+                <!--btn-outline-primary-->
+                <button type="button" class="btn resetBtn" data-dismiss="modal" (click)="modalCustomer = customer">
+                    Anuuler
+                </button>
+                <!--submitBtn-->
+                <button class="text-white" data-dismiss="modal" aria-label="Close" class="btn btn-primary submitBtn"
+                    (click)="UpdateCustomer(modalCustomer)">
+                    <i class="fas fa-save"></i> Valider
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal: modalCart -->

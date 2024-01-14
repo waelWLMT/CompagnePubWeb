@@ -1,0 +1,242 @@
+<div class="row">
+    <div class="col">
+        <nav aria-label="breadcrumb ">
+            <ol class="breadcrumb bgBreadCrumb">
+                <li class="breadcrumb-item"><a [routerLink]="['/tableauDeBord']">Home</a></li>
+                <li class="breadcrumb-item"><a href="#" [routerLink]="['/Nve_Utilisateur']">Utilisateurs</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Détails Utilistateur</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="card mb-4 CompagneCard">
+
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Détails Utilistateur
+    </div>
+
+    <div class="card-body" *ngIf="!displayDetails">
+        <div class="row">
+            <div class="col" style="text-align: center;">
+                <div class="spinner-border" role="status" style="color: gray;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div style="color: gray;">
+                    Chargement en cours ...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body" *ngIf="displayDetails">
+
+        <!-- Line 1-->
+        <div class="row">
+
+            <div class="col-md align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Matricule </span>
+                    <span class="float-right detailsColValue">{{ user.matricule }}</span>
+                </div>
+            </div>
+
+            <div class="col-md align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Nom Prénom</span>
+                    <span class="float-right detailsColValue">{{ user.lastName }} {{ user.firstName }}</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Line 2-->
+        <div class="row" style="margin-top: 1%;">
+
+            <div class="col-md align-items">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Email</span>
+                    <span class="float-right detailsColValue">{{ user.email }}</span>
+                </div>
+            </div>
+
+            <div class="col-md align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Téléphone</span>
+                    <span class="float-right detailsColValue">{{ user.telNumber }}</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Line 3 -->
+        <div class="row" style="margin-top: 1%;">
+
+            <div class="col-md align-items">
+
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Role</span>
+                    <span class="float-right detailsColValue">{{ getRoleDescription( user.roleId) }}</span>
+                </div>
+
+            </div>
+
+            <div class="col-md align-items">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Est activé</span>
+                    <span class="float-right detailsColValue">{{ user.activated ? 'Oui' : 'Non' }}</span>
+                </div>
+            </div>
+
+            <!--<div class="col-md align-items">
+
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Client</span>
+                    <span class="float-right detailsColValue">{{ user.clientId }}</span>
+                </div>
+
+            </div>-->
+
+        </div>
+
+        <!-- Line 4 -->
+        <div class="row" style="margin-top: 1%;" *ngIf="user.clientId === 2">
+            <div class="col-md-6 align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Client</span>
+                    <span class="float-right detailsColValue">{{ user.clientName }}</span>
+                </div>
+            </div>            
+        </div>
+
+        <div class="row" style="margin-top: 3%;">
+            <div class="col-md-12" style="text-align: right;">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCartUser"
+                    (click)="setModalUser()">
+                    <i class="fas fa-pencil-alt"></i> Modifier
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Modal: modalCart -->
+<div class="modal fade" id="modalCartUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Utilisateur</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+
+                <div class="row" *ngIf="displayDetails && modalUser != undefined">
+
+                    <div class="col-md-12">
+                        <form novalidate>
+
+                            <div class="form-row">
+                                <div class="col">
+                                    <label class="required">Nom</label>
+                                    <input type="text" class="form-control" placeholder="Nom" id="lastName"
+                                        name="lastName" [(ngModel)]="modalUser.lastName">
+                                </div>
+                                <div class="col">
+                                    <label class="required">Prénom</label>
+                                    <input type="text" class="form-control" placeholder="Prénom" id="firstName"
+                                        name="firstName" [(ngModel)]="modalUser.firstName">
+                                </div>
+                            </div>
+
+                            <div class="form-row" style="margin-top: 1%;">
+                                <div class="col">
+                                    <label class="required">Matricule</label>
+                                    <input type="text" class="form-control" placeholder="Matricule" id="matricule"
+                                        name="matricule" [(ngModel)]="modalUser.matricule">
+                                </div>
+                                <div class="col">
+                                    <label class="required">Numéro téléphone</label>
+                                    <input type="text" class="form-control" placeholder="TelNumber" id="telNumber"
+                                        name="telNumber" [(ngModel)]="modalUser.telNumber">
+                                </div>
+                            </div>
+
+                            <div class="form-row" style="margin-top: 1%;">
+
+                                <div class="col">
+                                    <label class="required">Email</label>
+                                    <input type="text" class="form-control" placeholder="Email" id="email" name="email"
+                                        [(ngModel)]="modalUser.email">
+                                </div>
+
+                                <div class="col">
+                                    <label class="required">Mot de passe</label>
+                                    <input type="password" class="form-control" placeholder="Mot de passe" id="password"
+                                        name="password" [(ngModel)]="modalUser.password">
+                                </div>
+
+                            </div>
+
+                            <div class="form-row" style="margin-top: 1%;">
+
+                                <div class="col">
+                                    <label class="required">Role</label>
+                                    <ng-select [items]="roles" bindLabel="roleName" bindValue="id" [multiple]="false"
+                                        placeholder="Select role utilisateur" [(ngModel)]="modalUser.roleId"
+                                        name="roleId" id="roleId" required>
+                                    </ng-select>
+                                </div>
+
+                                <div class="col">
+                                    <label class="required" *ngIf="modalUser.roleId === 2">Client</label>
+                                    <ng-select *ngIf="modalUser.roleId === 2" [items]="customersList" bindLabel="name" bindValue="id"
+                                        [multiple]="false" placeholder="Select Client" [(ngModel)]="modalUser.clientId"
+                                        name="clientId"  id="clientId" required>
+                                    </ng-select>
+                                </div>
+
+                            </div>
+
+                            <div class="form-row" style="margin-top: 1%;">
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="activated" name="activated"
+                                            [(ngModel)]="modalUser.activated">
+                                        <label class="form-check-label" for="activated">
+                                            Activé
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <!--Footer-->
+            <div class="modal-footer">
+                <!--btn-outline-primary-->
+                <button type="button" class="btn resetBtn" data-dismiss="modal" (click)="modalUser = user">
+                    Anuuler
+                </button>
+                <!--submitBtn-->
+                <button class="text-white" data-dismiss="modal" aria-label="Close" class="btn btn-primary submitBtn"
+                    (click)="updateUser(modalUser)">
+                    <i class="fas fa-save"></i> Valider
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal: modalCart -->

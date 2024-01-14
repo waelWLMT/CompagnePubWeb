@@ -1,0 +1,209 @@
+<div class="row">
+    <div class="col">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bgBreadCrumb">
+                <li class="breadcrumb-item"><a [routerLink]="['/tableauDeBord']">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Gestion Produit</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Nouveau Type de produit</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<!-- Nouveau Type de produit -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4 CompagneCard">
+            <div class="card-header">
+                <i class="fas fa-chart-area mr-1"></i>
+                Nouveau type de produit
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form #form="ngForm" (ngSubmit)="submit(form)" novalidate autocomplete="off">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="form-row ">
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="name">Nom produit</label>
+                                            <input type="text" class="form-control username" ngModel id="name"
+                                                placeholder="Nom produit" name="name" required>
+                                        </div>
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="price">Prix unitaire</label>
+                                            <input type="number" class="form-control username" ngModel id="price"
+                                                placeholder="Prix unitaire" name="price" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row ">
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="DefaultPenetrationRate">Taux de
+                                                pénétration par défaut</label>
+                                            <input type="number" class="form-control username" ngModel
+                                                id="defaultPenetrationRate" placeholder="Taux de pénétration par défaut"
+                                                name="defaultPenetrationRate" required>
+                                        </div>
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="lastName">Couleur</label>
+                                            <input ejs-colorpicker type="color" class="form-control" id="colorValue"
+                                                required [(ngModel)]="colorValue" name="colorValue" />
+                                        </div>
+
+                                        <div class="col-md-4" style="text-align: center; ">
+
+                                            <div class="form-group form-check"
+                                                style="margin-top: 40px; cursor: pointer;">
+                                                <input type="checkbox" id="acceptTerms" class="form-check-input"
+                                                    [(ngModel)]="hasSize" style="cursor: pointer;" name="hasSize" />
+                                                <label for="acceptTerms" class="form-check-label"
+                                                    style="cursor: pointer;">Edit Taille produit</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-row" *ngIf="hasSize">
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="lastName">Hauteur</label>
+                                            <input type="number" class="form-control username" ngModel id="height"
+                                                placeholder="Hauteur" name="height" required>
+                                        </div>
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="name">Largeur</label>
+                                            <input type="number" class="form-control username" ngModel id="width"
+                                                placeholder="Largeur" name="width" required>
+                                        </div>
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required">Unité</label>
+                                            <ng-select [items]="unitList" bindLabel="description" bindValue="id"
+                                                [multiple]="false" placeholder="Select unité"
+                                                [(ngModel)]="selectedUnitId" name="unite">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="lastName">Description</label>
+                                            <textarea class="form-control" placeholder="Description" ngModel
+                                                id="description" name="description" rows="6" required></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+
+                                <div class="col-md-12 BtnsCol">
+
+                                    <button type="reset" class="btn resetBtn" style="margin-right: 10px;">
+                                        Anuuler
+                                    </button>
+
+                                    <button type="submit" class="btn btn-primary submitBtn">
+                                        <i class="fas fa-save"></i> Valider
+                                    </button>
+
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- List Product types-->
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4 CompagneCard">
+
+            <div class="card-header">
+                <i class="fas fa-table mr-1"></i>
+                Produits Publicitaire
+            </div>
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+
+                        <thead>
+                            <tr>
+                                <th>Nom Type de produit</th>
+                                <th>Prix</th>
+                                <th>Couleur</th>
+                                <th>Hauteur</th>
+
+                                <th>Largeur</th>
+                                <th>Unité de mesure</th>
+                                <th>Description</th>
+                                <!--<th></th>-->
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr *ngIf="!showList">
+                                <td colspan="7" style="text-align: center;">
+                                    <div class="spinner-grow" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <div>
+                                        <p>Chargement en cours...</p>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr *ngFor="let productType of productTypesList | paginate: { itemsPerPage: nbrItemPerPage, currentPage: page }">
+                                <td>{{ productType.name }}</td>
+                                <td>{{ productType.price }}</td>
+                                <td>{{ productType.color }}</td>
+                                <td>{{ productType.size != null ? productType.size.height : ''}}</td>
+                                <td>{{ productType.size != null ? productType.size.width : ''}}</td>
+                                <td>{{ productType.size != null ? productType.size.unit : ''}}</td>
+                                <td>{{ productType.description}}</td>
+
+                                <!--<td class="linkBtn" style="cursor: pointer;" (click)='goToDetails(productType)'>
+                                    <i class="fas fa-edit"></i>                          
+                                </td>-->
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+
+                <div class="row">
+                    <div class="col-md">
+                        <pagination-controls (pageChange)="page = $event" class="float-right"></pagination-controls>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

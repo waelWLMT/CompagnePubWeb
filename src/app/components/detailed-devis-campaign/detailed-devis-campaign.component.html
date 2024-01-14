@@ -1,0 +1,254 @@
+<div class="row">
+    <div class="col">
+        <nav aria-label="breadcrumb ">
+            <ol class="breadcrumb bgBreadCrumb">
+                <li class="breadcrumb-item"><a [routerLink]="['/tableauDeBord']">Home</a></li>
+                <li class="breadcrumb-item"><a href="#" [routerLink]="['/']">Campagnes</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Devis Campagne</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="card mb-4 CompagneCard">
+
+
+    <!-- Loading Body -->
+    <div class="card-body" *ngIf="!displayDetails">
+
+        <div class="row">
+            <div class="col" style="text-align: center;">
+                <div class="spinner-border" role="status" style="color: gray;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div style="color: gray;">
+                    Chargement en cours ...
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Devis Body -->
+    <div class="card-body" *ngIf="displayDetails">
+
+        <!-- Titre Devis -->
+        <div class="row">
+            <div class="col-md" style="text-align: center;">
+                <h2>{{ 'Devis' | uppercase }}</h2>
+            </div>
+        </div>
+
+        <!-- Line 2 Client Etat Devis ... -->
+        <div class="row" style="margin-top: 2%;">
+
+            <div class="col-md-3" style="text-align: left;">
+
+                <table style="width: inherit;">
+
+                    <tbody>
+                        <tr>
+                            <td style="width: 40%;">
+                                <span class="detailsColLabel">
+                                    Client:
+                                </span>
+                            </td>
+                            <td style="width: 60%;">
+                                <span class="detailsColValue float-left badge">
+                                    {{ campaign.customer.name}}
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 40%;">
+                                <span class="detailsColLabel">
+                                    Etat:
+                                </span>
+                            </td>
+                            <td style="width: 60%;">
+                                <span class="detailsColValue float-left badge">
+                                    Brouillon
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 40%;">
+                                <span class="detailsColLabel">
+                                    Region:
+                                </span>
+                            </td>
+                            <td style="width: 60%;">
+                                <span class="detailsColValue float-left badge">
+                                    {{ campaign.region.name}}
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 40%;">
+                                <span class="detailsColLabel">
+                                    Nbr villes
+                                </span>
+                            </td>
+                            <td style="width: 60%;">
+                                <span class="detailsColValue float-left badge">
+                                    {{ detailedTowns.length }}
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="col-md" style="text-align: right">
+
+                <span class="detailsColLabel" style="text-align: left;">
+                    Tunis le,
+                </span>
+
+                <span class="detailsColValue badge">
+                    {{ getCurrentDate()| date:'dd/MM/yyy' }}
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- Line 3 Body Devis -->
+        <!-- Campaign products list-->
+        <div class="row" style="margin-top: 3%;">
+            <div class="col-md table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+
+                    <thead>
+                        <tr style="border-style:hidden;">
+                            <span style="font-size: 25px; color: #707070;">
+                                List des produits
+                            </span>                           
+                        </tr>
+
+                        <tr style="background-color: #D3D3D3;">
+                            <th>Type de produit</th>
+                            <th>Nombre de produit par type de business</th>
+                            <th>Prix unitaire</th>
+                            <th>Prix par type de business</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let produit of campaign.campaignProducts">
+                            <td>{{ produit.productType.name }}</td>
+                            <td>{{ produit.nbrProductPerBusiness }}</td>
+                            <td>{{ produit.finalUnitPrice | currency:'EUR':'symbol':'3.2-2':'fr' }}</td>
+                            <td>{{ produit.finalUnitPrice * produit.nbrProductPerBusiness |
+                                currency:'EUR':'symbol':'3.2-2':'fr' }}</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <!-- Line 4 Body Devis -->
+        <!-- Campaign Business types list-->
+        <div class="row">
+            <div class="col-md table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+
+                    <thead>
+
+                        <tr style="border-style:hidden;">
+                            <th colspan="4" style="text-align: left;">
+                                <span style="font-size: 25px; color: #707070;">
+                                    List des types de business
+                                </span>                               
+                            </th>
+                        </tr>
+
+                        <tr style="background-color: #D3D3D3;">
+                            <th>Type de business</th>
+                            <th>Nombre des business</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let businessType of campaign.campaignBusinessTypes">
+                            <td>{{ businessType.code }}</td>
+                            <td>{{ countBusinessTypeInCampaign(businessType) }}</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 float-right">
+
+                <p>
+                    <span class="detailsColLabel">
+                        Nbr business:
+                    </span>
+
+                    <span class="detailsColValue badge">
+                        {{ campaign.campaignBusinesses.length }}
+                    </span>
+                </p>
+
+                <p>
+                    <span class="detailsColLabel">
+                        Coût de business:
+                    </span>
+
+                    <span class="detailsColValue badge">
+                        {{ countBusinessCost() | currency:'EUR':'symbol':'3.2-2':'fr' }}
+                    </span>
+                </p>
+
+                <p>
+                    <span class="detailsColLabel">
+                        Coût total:
+                    </span>
+
+                    <span class="detailsColValue badge">
+                        {{ campaign.totalCost | currency:'EUR':'symbol':'3.2-2':'fr' }}
+                    </span>
+                </p>
+
+            </div>
+        </div>
+
+        <div class="row" *ngIf="campaign.campaignState === 1">
+
+            <div class="col-md-6"></div>
+
+            <div class="col-md-3 float-right">
+
+                <button type="button" class="btn btn-primary btn-sm btn-block" (click)="ValiderDevis()">
+                    Valider
+                </button>
+
+            </div>
+
+            <div class="col-md-3 float-right">
+
+                <button type="button" class="btn btn-sm resetBtn btn-block">
+                    Annuler
+                </button>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

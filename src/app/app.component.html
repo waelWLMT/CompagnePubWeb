@@ -1,0 +1,235 @@
+
+<nav *ngIf="currentUser" class="sb-topnav navbar navbar-expand navbar-dark bg-dark"  
+ style="background-color: #244777 !important;" 
+ aria-label="">
+    <a class="navbar-brand" href="">PubCampaign</a>
+    <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="" style="color: white;">
+        <em class="fas fa-bars"></em>
+    </button>
+
+    <!-- Navbar Search-->
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        <div class="input-group" *ngIf="false">
+            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search"
+                aria-describedby="basic-addon2" />
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" ><em class="fas fa-search"></em></button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Navbar-->
+    <ul class="navbar-nav ml-auto ml-md-0">
+
+        <li class="nav-item dropdown">
+
+            <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
+                <em class="fas fa-user fa-fw"></em>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#"> 
+                    <span>
+                        <img class="ui avatar image" src="assets/img/no-pic.png" style="width: 30px; height: 30px;border-radius: 50%;" alt="">
+                    </span>
+                    <span>
+                        <!--{{ getConnectedUserName() }}-->
+                        Mon Profile
+                    </span>
+                </a>
+                               
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" (click)="logout()">
+                    <span>
+                        <em class="fas fa-sign-out-alt" aria-hidden="true"></em>                        
+                    </span>
+                    <span>
+                        Se déconnecter
+                    </span>
+                </a>
+            </div>
+
+        </li>
+
+    </ul>
+
+</nav>
+
+<div id="layoutSidenav">
+    
+    
+    <div id="layoutSidenav_nav" *ngIf="currentUser" >
+       
+        <!--sb-sidenav accordion sb-sidenav-dark-->
+        <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion" aria-label="">
+           
+            <div class="sb-sidenav-menu" style="background-color: #FFF !important;">
+
+                <div *ngIf="menusList != null && menusList != undefined">
+                    <app-menus  [menus]="menusList"> </app-menus>
+                </div>
+               
+                <!-- New Code for navigation menu -->
+                <div class="nav" *ngIf="false">
+
+                    <a class="nav-link" routerLink="tableauDeBord">
+                        <div class="sb-nav-link-icon"><em class="fas fa-tachometer-alt"></em></div>
+                        Tableau de bord
+                    </a>
+
+                    <!-- BEGIN Module Client -->
+
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClients"
+                        aria-expanded="false" aria-controls="collapseClients">
+                        <div class="sb-nav-link-icon"><em class="fas fa-book-open"></em></div>
+                        Gestion Client
+                        <div class="sb-sidenav-collapse-arrow"><em class="fas fa-angle-down"></em></div>
+                    </a>
+
+                    <div class="collapse" id="collapseClients" aria-labelledby="headingTwo"
+                        data-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages" aria-label="">
+
+                            <a class="nav-link collapsed" routerLink="Nve_Client">
+                                Nouveau Client
+                                <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+
+                            <a class="nav-link collapsed" routerLink="Lst_Client">
+                                Clients
+                                <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+
+                        </nav>
+
+                    </div>
+                    <!-- Fin Module Client -->
+
+                    <!-- BEGIN Module Utilisateur -->
+
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilisateurs"
+                        aria-expanded="false" aria-controls="collapseUtilisateurs">
+                        <div class="sb-nav-link-icon"><em class="fas fa-book-open"></em></div>
+                        Gestion Utilisateur
+                        <div class="sb-sidenav-collapse-arrow"><em class="fas fa-angle-down"></em></div>
+                    </a>
+
+                    <div class="collapse" id="collapseUtilisateurs" aria-labelledby="headingTwo"
+                        data-parent="#sidenavAccordion">
+
+                        <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages" aria-label="">
+
+                            <a class="nav-link collapsed" routerLink="Nve_Utilisateur">
+                                Nouveau Utilisateur
+                                <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+
+                            <a class="nav-link collapsed" routerLink="Lst_Utilisateur">
+                                Utilisateurs
+                                <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+
+                        </nav>
+
+                    </div>
+
+                    <!-- Fin Module Utilisateur -->
+
+
+                    <!-- BEGIN Module Compagne Pub -->
+
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCompagn"
+                        aria-expanded="false" aria-controls="collapseCompagn">
+                        <div class="sb-nav-link-icon"><em class="fas fa-book-open"></em></div>
+                        Gestion Compagne
+                        <div class="sb-sidenav-collapse-arrow"><em class="fas fa-angle-down"></em></div>
+                    </a>
+
+                    <div class="collapse" id="collapseCompagn" aria-labelledby="headingTwo"
+                        data-parent="#sidenavAccordion">
+
+                        <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages" aria-label="">
+
+                            <a class="nav-link collapsed" routerLink="Nve_Compagne">
+                                nouvelle campagne
+                                <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+
+                            <a class="nav-link collapsed" routerLink="Lst_Compagne">
+                                Compagnes
+                                <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+
+                        </nav>
+
+                    </div>
+
+                    <!-- BEGIN Module Compagne Pub -->
+
+
+                    <!-- BEGIN Module Produit Pub -->
+
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduits"
+                        aria-expanded="false" aria-controls="collapseProduits">
+                        <div class="sb-nav-link-icon"><em class="fas fa-book-open"></em></div>
+                        Gestion Produit
+                        <div class="sb-sidenav-collapse-arrow"><em class="fas fa-angle-down"></em></div>
+                    </a>
+
+                    <div class="collapse" id="collapseProduits" aria-labelledby="headingTwo"
+                        data-parent="#sidenavAccordion">
+
+                        <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages" aria-label="">
+
+                            <a class="nav-link collapsed" routerLink="Nve_Type_Produit">
+                                Nouveau produit
+                                <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+
+                            <a class="nav-link collapsed" routerLink="Lst_Types_Produits">
+                                Produits
+                                <div class="sb-sidenav-collapse-arrow"></div>
+                            </a>
+
+                        </nav>
+
+                    </div>
+
+                    <!-- BEGIN Module Compagne Pub -->
+
+                </div>                
+
+            </div>
+
+            <div class="sb-sidenav-footer">              
+                <div class="small">Espace :</div>
+                {{ getEspaceName() }}
+            </div>
+
+        </nav>
+    </div>
+
+    <div id="layoutSidenav_content">
+
+        <main>
+            <div class="container-fluid">
+                <router-outlet></router-outlet>
+            </div>
+        </main>
+
+        <footer class="py-4 bg-light mt-auto" *ngIf="false" > <!--*ngIf="currentUser"-->
+            <div class="container-fluid">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Your Website 2020</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+</div>

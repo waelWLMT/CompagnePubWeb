@@ -1,0 +1,83 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+//@import '~pretty-checkbox/src/pretty-checkbox.scss';
+
+
+.CompagneAppBG{
+    background-color: #f0f8fe !important;
+}
+
+.bgBreadCrumb{
+    background-color: white;
+}
+
+form label.required:after
+{
+    color: red;
+    content: " *";
+    font-weight: bold;
+}
+
+.linkBtn {    
+    //cursor: pointer;
+    color: #007bff;
+    text-align: center;
+}
+
+.deleteIcon {
+    color: #f01414;
+    text-align: center;
+}
+
+
+.BgColDetails {
+    background-color: #f8f8f8;
+}
+
+.detailsColLabel {
+    margin-left: 2%;
+    font-weight: bold;
+}
+
+.detailsColValue {
+    margin-right: 2%;
+    color: #707070; 
+    font-size: 15px;
+}
+
+.CompagneCard {
+    margin: 10px auto !important;
+}
+
+//background: #e9ecef !important;
+.CompagneCard .card-header {
+    background: white !important;
+    color: #244777 !important;
+    font-weight: bold !important;
+    font-size: 16 !important;
+}
+
+.BtnsCol {
+    text-align: right;
+}
+
+.submitBtn {   
+    background-color: #2185d0;
+    color: #ffffff;        
+}
+
+.deleteBtn {    
+    background-color: #d9534f;
+    color: #ffffff;  
+}
+
+.resetBtn {    
+    background-color: rgb(224, 225, 226) ;
+    color:rgba(0, 0, 0, 0.6); 
+}
+
+
+/*Badges color classes*/
+.bg-deep-orange, .bg-deep-orange th , .bg-deep-orange td, .bg-deep-orange span{
+    background-color: #FF5722 !important;
+    color: #fff !important; }
+

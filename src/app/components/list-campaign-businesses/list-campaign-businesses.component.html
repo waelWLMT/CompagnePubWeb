@@ -1,0 +1,279 @@
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bgBreadCrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/tableauDeBord']">Home</a></li>
+        <li class="breadcrumb-item"><a href="#" [routerLink]="['/Nve_Compagne']">Compagne</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Businesses</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card mb-4 CompagneCard">
+
+      <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        List business
+      </div>
+
+      <div class="card-body">
+
+        <div class="row" style="margin-bottom: 2%;">
+          <div class="col-md">
+            <fieldset class="border p-2">
+              <legend class="w-auto" style="color: gray; font-size: 15px;">&nbsp; Recherche &nbsp;</legend>
+              <div class="row" style="margin-bottom: 1%;">
+                <div class="col-md-4" style="margin-bottom: 1%;">
+                  <input type="text" [(ngModel)]="searchCreteria" id="searchCreteria" name="searchCreteria"
+                    class="form-control" placeholder="Recherche par mot clé">
+                </div>
+
+                <div class="col-md-3">
+                  <button class="btn btn-secondary float-left" (click)="searchCreteria = ''">Initialiser</button>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col-md table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+              <thead>
+                <tr style="text-align: center;">
+                  <th>Ville</th>
+                  <th style="width: 15%;">Type de business</th>
+                  <th style="width: 30%;">Nom de Business</th>
+                  <th>Latitude</th>
+                  <th>longitude</th>
+                  <th>Etat</th>
+                  <th>Photos</th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <tr *ngIf="showList && campaignBusinesses.length == 0">
+                  <td colspan="8" style="text-align: center;">Aucun élément à afficher</td>
+                </tr>
+
+                <tr *ngIf="!showList">
+                  <td colspan="8" style="text-align: center;">
+                    <div class="spinner-grow" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                    <div>
+                      <p>Loading...</p>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr
+                  *ngFor="let business of campaignBusinesses | filter:searchCreteria  | paginate: { itemsPerPage: nbrItemPerPage, currentPage: page }">
+
+                  <td> {{ business.townName }}</td>
+                  <td style="width: 15%;"> {{ business.busninessTypeName }} </td>
+                  <td style="width: 30%;">{{ business.businessName }}</td>
+                  <td>{{ business.place.lat }}</td>
+                  <td>{{ business.place.lng }}</td>
+
+                  <td style="text-align: center;">
+
+                    <small>
+                      <span style="font-size: 12px;" [ngClass]="{ 'badge': true, 'badge-pill': true,                        
+                          'badge-light': business.state === 1,
+                          'badge-warning': business.state === 2,
+                          'badge-success': business.state === 3,
+                          'badge-danger': business.state === 4 }">
+                        {{ business.stateName }}
+                      </span>
+
+                    </small>
+
+                  </td>
+
+                  <td class="linkBtn" style="text-align: center; cursor: pointer; " data-toggle="modal"
+                    data-target="#modalGalleryBusiness" (click)="setModalGalleryBusiness(business)">
+                    <i class="fas fa-eye"></i>
+                  </td>
+
+
+                  <td class="linkBtn" style="text-align: center; cursor: pointer; " data-toggle="modal"
+                    data-target="#modalCartBusiness" (click)="setModalBusiness(business)">
+                    <i class="fas fa-pencil-alt" [hidden]="business.state > 2"></i>
+                  </td>
+
+
+
+                </tr>
+
+              </tbody>
+
+            </table>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md">
+            <pagination-controls (pageChange)="page = $event" class="float-right"></pagination-controls>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal: Gallery photo business -->
+<div class="modal fade" id="modalGalleryBusiness" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Galerie</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+       
+        <div class="row" >
+          <div class="col-md">
+            <app-gallery [business]= "selectedBusiness" [campaignId]= "selectedCampaignId"></app-gallery>
+          </div>         
+        </div>        
+      </div>
+      <!--Footer-->
+      <div class="modal-footer">        
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal: modalCart -->
+
+<!-- Modal: Update business -->
+<div class="modal fade" id="modalCartBusiness" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Edit etat business</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+
+        <div class="row" *ngIf="modalBusiness != undefined">
+          <div class="col-md-12">
+            <form novalidate>
+
+              <div class="row">
+                <div class="col-md-12">
+
+                  <div class="form-row ">
+
+                    <div class="form-group col-md">
+
+                      <label class="control-label" class="control-label required" for="name">Ville</label>
+                      <input type="text" class="form-control username" [value]="modalBusiness.cityName" id="cityName"
+                        name="cityName" disabled>
+
+                    </div>
+
+                    <div class="form-group col-md">
+
+                      <label class="control-label required" for="taxIdNumber">Type de business</label>
+                      <input type="text" class="form-control username" [value]="modalBusiness.businessTypeName"
+                        id="businessTypeName" name="businessTypeName" disabled>
+
+                    </div>
+
+                  </div>
+
+                  <div class="form-row ">
+
+                    <div class="form-group col-md">
+
+                      <label class="control-label" class="control-label required" for="name">Nom de business</label>
+                      <input type="text" class="form-control username" [value]="modalBusiness.place.name" id="placeName"
+                        name="placeName" disabled>
+
+                    </div>
+
+                    <div class="form-group col-md">
+
+                      <label class="control-label required" for="taxIdNumber">Etat actuelle</label>
+                      <input type="text" class="form-control username" [value]="modalBusiness.currentStateDescription"
+                        id="currentStateDescription" name="currentStateDescription" disabled>
+
+                    </div>
+
+                  </div>
+
+                  <div class="form-row ">
+
+                    <div class="form-group col-md">
+
+                      <label class="control-label required">Nouvelle état</label>
+
+                      <ng-select [items]="businessStateList" bindLabel="description" bindValue="stateId"
+                        [multiple]="false" placeholder="Select etat de business" [(ngModel)]="selectedStateId"
+                        name="selectedStateId" id="selectedStateId">
+                      </ng-select>
+
+                    </div>
+
+                    <div class="form-group col-md">
+
+                      <label class="control-label required" for="selectedPhotos">Photos</label>
+                      <input type="file" id="selectedPhotos" name="selectedPhotos" class="form-control-file"
+                        (change)="setListPhotos($event)" multiple>
+
+                    </div>
+
+
+                  </div>
+
+
+                </div>
+
+              </div>
+
+            </form>
+
+          </div>
+
+        </div>
+
+
+      </div>
+      <!--Footer-->
+      <div class="modal-footer">
+        <!--btn-outline-primary-->
+        <button type="button" class="btn resetBtn" data-dismiss="modal" (click)="modalBusiness = undefined">
+          Anuuler
+        </button>
+        <!--submitBtn-->
+        <button class="text-white" data-dismiss="modal" aria-label="Close" class="btn btn-primary submitBtn"
+          (click)="updateBusinessState(modalBusiness)">
+          <i class="fas fa-save"></i> Valider
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal: modalCart -->

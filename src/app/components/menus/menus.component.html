@@ -1,0 +1,41 @@
+<!-- New Code for navigation menu -->
+<div class="nav">
+    <div *ngFor="let menu of parentMenus">
+
+        <!--[routerLink]="child.link"-->
+        <a class="nav-link" [routerLink]="menu.parent.link" *ngIf="menu.parent.id===1 || menu.parent.id === 29">
+            <div class="sb-nav-link-icon">               
+               <i [class]="menu.parent.iconLibelle"></i>
+            </div>
+            {{ menu.parent.menuCode}}
+        </a>
+
+        <a *ngIf="menu.parent.id !== 1 && menu.parent.id !== 29" class="nav-link collapsed" href="#" data-toggle="collapse"
+            [attr.data-target]="menu.parent.dataTarget" aria-expanded="false"
+            attr.aria-controls="{{ menu.parent.ariaControls }}">
+
+            <div class="sb-nav-link-icon">
+                <i [class]="menu.parent.iconLibelle"></i>
+            </div>
+
+            {{ menu.parent.menuCode}}
+            <div class="sb-sidenav-collapse-arrow">
+                <i class="fas fa-angle-down"></i>
+            </div>
+        </a>
+
+        <div *ngIf="menu.parent.id !== 1" class="collapse" [attr.id]="menu.parent.ariaControls"
+            aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+
+            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                <a *ngFor="let child of menu.childs" class="nav-link collapsed" [routerLink]="child.link">
+                    {{ child.menuCode }}
+                    <div class="sb-sidenav-collapse-arrow"></div>
+                </a>
+            </nav>
+        </div>
+
+    </div>
+
+
+</div>

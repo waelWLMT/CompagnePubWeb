@@ -1,0 +1,237 @@
+<div class="row">
+    <div class="col">
+        <nav aria-label="breadcrumb ">
+            <ol class="breadcrumb bgBreadCrumb">
+                <li class="breadcrumb-item"><a [routerLink]="['/tableauDeBord']">Home</a></li>
+                <li class="breadcrumb-item"><a [routerLink]="['/Nve_Type_Produit']">Client</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Détails Client</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="card mb-4 CompagneCard">
+
+    <div class="card-header">
+        <i class="fas fa-table mr-1"></i>
+        Détails type de produit
+    </div>
+
+    <div class="card-body" *ngIf="!displayDetails">
+        <div class="row">
+            <div class="col" style="text-align: center;">
+                <div class="spinner-border" role="status" style="color: gray;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div style="color: gray;">
+                    Chargement en cours ...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body" *ngIf="displayDetails">
+
+        <!-- Line 1-->
+        <div class="row">
+
+            <div class="col-md align-items">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Type de produit</span>
+                    <span class="float-right detailsColValue">{{ details.name }}</span>
+                </div>
+            </div>
+
+            <div class="col-md align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Prix</span>
+                    <span class="float-right detailsColValue">{{ details.price | currency:'EUR':'symbol':'3.2-2':'fr' }}</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Line 2-->
+        <div class="row" style="margin-top: 1%;">
+
+            <div class="col-md align-items">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Hauteur</span>
+                    <span class="float-right detailsColValue">{{ details.size.height }} {{ getDimensionUnit(details.size.unit) }} </span>
+                </div>
+            </div>
+
+            <div class="col-md align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Largeur</span>
+                    <span class="float-right detailsColValue">{{ details.size.width }} {{ getDimensionUnit(details.size.unit) }} </span>
+                </div>
+            </div>
+
+        </div>
+
+        <!--Line 3-->
+        <div class="row" style="margin-top: 1%;">
+
+            <div class="col-md align-items ">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Nombre de produit par business</span>
+                    <span class="float-right detailsColValue">{{ details.defaultNbrProductPerBusiness }} </span>
+                </div>
+            </div>
+
+
+            <div class="col-md align-items">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Couleur</span>
+                    <span class="float-right detailsColValue">{{ details.color }} </span>
+                </div>
+            </div>
+
+            
+        </div>
+
+        <!-- Line 4 -->
+        <div class="row" style="margin-top: 1%;">
+            <div class="col-md align-items">
+                <div class="BgColDetails">
+                    <span class="detailsColLabel">Description</span>
+                    <span class="float-right detailsColValue">{{ details.description }}</span>
+                </div>
+            </div>
+
+            <div class="col-md align-items">
+               
+            </div>
+
+        </div>
+
+        <div class="row" style="margin-top: 3%;">
+            <div class="col-md-12" style="text-align: right;">
+                <!-- Button trigger modal-->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCartClient"
+                    (click)="setmodalProductType()">
+                    <i class="fas fa-pencil-alt"></i> Modifier
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Modal: modalCart -->
+<div class="modal fade" id="modalCartClient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Edit Type de produit</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+
+                <div class="row" *ngIf="displayDetails && modalProductType != undefined">
+
+                    <div class="col-md-12">
+                        <form novalidate autocomplete="off">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="form-row ">
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="name">Nom produit</label>
+                                            <input type="text" class="form-control username" [(ngModel)]="modalProductType.name" id="name"
+                                                placeholder="Nom produit" name="name" required>
+                                        </div>
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="price">Prix unitaire</label>
+                                            <input type="number" class="form-control username" [(ngModel)]="modalProductType.price" id="price"
+                                                placeholder="Prix unitaire" name="price" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row ">
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="DefaultPenetrationRate">Taux de pénétration par défaut</label>
+                                            <input type="number" class="form-control username" [(ngModel)]="modalProductType.defaultNbrProductPerBusiness"
+                                                id="defaultNbrProductPerBusiness" placeholder="Taux de pénétration par défaut"
+                                                name="defaultNbrProductPerBusiness" required>
+                                        </div>
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="lastName">Couleur</label>
+                                            <input ejs-colorpicker type="color" class="form-control" id="colorValue"
+                                                required [(ngModel)]="modalProductType.color" name="colorValue" />
+                                        </div>                                        
+
+                                    </div>
+
+                                    <div class="form-row">
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="lastName">Hauteur</label>
+                                            <input type="number" class="form-control username" [(ngModel)]="modalProductType.size.height" id="height"
+                                                placeholder="Hauteur" name="height" required>
+                                        </div>
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="name">Largeur</label>
+                                            <input type="number" class="form-control username" [(ngModel)]="modalProductType.size.width" id="width"
+                                                placeholder="Largeur" name="width" required>
+                                        </div>
+
+                                        <div class="form-group col-md">
+                                            <label class="control-label required">Unité</label>
+                                            <ng-select [items]="dimensionUnits" bindLabel="unitDescription" bindValue="id"
+                                                [multiple]="false" placeholder="Select unité"
+                                                [(ngModel)]="modalProductType.size.unit" name="unite">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        
+                                        <div class="form-group col-md">
+                                            <label class="control-label required" for="lastName">Description</label>
+                                            <textarea class="form-control" placeholder="Description" [(ngModel)]="modalProductType.description" id="description" name="description" rows="6" required></textarea>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div> 
+
+                        </form>
+
+                    </div>
+
+                    
+
+                </div>
+
+
+            </div>
+            <!--Footer-->
+            <div class="modal-footer">
+                <!--btn-outline-primary-->
+                <button type="button" class="btn resetBtn" data-dismiss="modal" (click)="modalProductType = details">
+                    Anuuler
+                </button>
+                <!--submitBtn-->
+                <button class="text-white" data-dismiss="modal" aria-label="Close" class="btn btn-primary submitBtn"
+                    (click)="update(modalProductType)">
+                    <i class="fas fa-save"></i> Valider
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal: modalCart -->

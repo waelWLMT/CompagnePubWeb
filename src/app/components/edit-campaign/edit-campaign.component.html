@@ -1,0 +1,171 @@
+<div class="row">
+    <div class="col">
+        <nav aria-label="breadcrumb ">
+            <ol class="breadcrumb bgBreadCrumb">
+                <li class="breadcrumb-item"><a [routerLink]="['/tableauDeBord']">Home</a></li>
+                <li class="breadcrumb-item"><a href="#" [routerLink]="['/']">Campagne</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Détails Campagne</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="card mb-4 CompagneCard">
+
+    <div class="card-header">
+        <div class="row">
+            
+            <div class="col-md-3">
+                <i class="fas fa-table mr-1"></i>Edit Campagne
+            </div>   
+
+            <div class="col-md-3 && isEditAutorized ">
+                Etat: 
+                <span *ngIf="displayData"
+                style="margin-left: 2px; font-size: 15px;"                
+                [ngClass]="{ 'badge': true, 'badge-pill': true,
+                'badge-secondary': campaignState.stateId ===1,
+                'badge-info': campaignState.stateId === 2,
+                'badge-warning': campaignState.stateId === 3,
+                'badge-success': campaignState.stateId === 4,
+                'badge-danger': campaignState.stateId === 5 }"
+                >{{ campaignState.stateDescription }}  </span>
+            </div>
+
+
+            <div class="col-md-3" *ngIf="campaign != undefined  && isEditAutorized">
+                Mon Budget: 
+                <span class="badge badge-pill badge-light" style="margin-left: 2px; font-size: 15px;">{{ campaign.forecastBudget | currency:'EUR':'symbol':'3.2-2':'fr' }}</span>
+            </div>
+
+            <div class="col-md-3" *ngIf="campaign != undefined && isEditAutorized">
+                Coût total: 
+                <span class="badge badge-pill badge-light" style="margin-left: 2px; font-size: 15px;">{{ campaign.totalCost | currency:'EUR':'symbol':'3.2-2':'fr' }}</span>
+            </div>            
+
+        </div>
+    </div>
+   
+    <div class="card-body">
+
+        <!-- A voir avec Khalil-->
+        <div class="row" style="margin-bottom: 5%;" *ngIf="false">
+            <div class="col-md">
+                <div style="margin-left: 1%;">
+                    <span class="badge badge-pill badge-secondary" style="margin-left: 1%;">Brouillon</span>
+                    <span class="badge badge-pill badge-warning" style="margin-left: 1%;">En cours</span>
+                    <span class="badge badge-pill badge-success" style="margin-left: 1%;">Clôturéee</span>
+                    <span class="badge badge-pill badge-danger" style="margin-left: 1%;">Annulée</span>
+                </div>        
+            </div>
+        </div>
+
+        <div class="row" *ngIf="!isEditAutorized">
+            <div class="col" style="text-align: center;">
+                
+                <div style="color: gray;">
+                    Modification de compagne n'est pas autorisée !!!
+                </div>
+            </div>
+        </div>
+        
+        <div class="row" *ngIf="!displayData">
+            <div class="col" style="text-align: center;">
+                <div class="spinner-border" role="status" style="color: gray;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div style="color: gray;">
+                    Chargement en cours ...
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="displayData && isEditAutorized">
+            <div class="col-md">
+
+                <!-- Nav Tabs Begins Here -->
+                <nav>
+                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                            role="tab" aria-controls="nav-home" aria-selected="true">Paramètres globaux</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                            role="tab" aria-controls="nav-profile" aria-selected="false">Type de business</a>
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                            role="tab" aria-controls="nav-contact" aria-selected="false">Villes</a>
+                        <a class="nav-item nav-link" id="nav-produit-tab" data-toggle="tab" href="#nav-produit"
+                            role="tab" aria-controls="nav-products" aria-selected="false">Produits</a>
+                    </div>
+                </nav>
+
+
+                <div class="tab-content" id="nav-tabContent">
+
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+                        <!-- Parametres globales-->
+                        <div class="row">
+                            <div class="col-md">
+                                <app-edit-campaign-global-params 
+                                [campaignGlobalParams]="campaign"
+                                (updateCampaignGlobalParmsEmmiter)="updateCampaignGlobalParams($event)"
+                                (goToDetailsEmmitter)="goToDetailsCampaignPage($event)">
+                                </app-edit-campaign-global-params>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+                        <!-- Business Types-->
+                        <div class="row">
+                            <div class="col-md">
+                                <app-edit-campaign-business-types
+                                    [campaignBusinessTypes]="campaign.campaignBusinessTypes"
+                                    (deletecampaignBusinessTypeEmmiter)="deleteCampaignBusinessTypeByMapCode($event)"
+                                    (addCampaignBusinessTypeEmmiter)="addNewCampaignBusinessType($event)">
+                                </app-edit-campaign-business-types>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+                        <!-- Campaign Towns -->
+                        <div class="row">
+                            <div class="col-md">
+                                <app-edit-campaign-towns
+                                    [detailedCampaignTownsList]="detailedCampaignTownsList"
+                                    [CampaignRegion]= "campaign.region"
+                                    (deleteCampaignTownEmmiter)="deleteCampaignTown($event)"
+                                    (addCampaignTownEmmiter)="addCampaigntown($event)">
+                                </app-edit-campaign-towns>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-produit" role="tabpanel" aria-labelledby="nav-produit-tab">
+
+                        <!-- Campaign Products -->
+                        <div class="row">
+                            <div class="col-md">
+                                <app-edit-campaign-products [campaignProducts]="campaign.campaignProducts"
+                                    (updateCampaignProductEmmiter)="updateCampaignProduct($event)"
+                                    (deleteProductEmmiter)="deleteProductById($event)"
+                                    (addCampaignProductEmmiter)="addNewCampaignProduct($event)">
+                                </app-edit-campaign-products>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Nav Tabs Ends here-->
+            </div>
+        </div>
+
+    </div>    
+</div>
+

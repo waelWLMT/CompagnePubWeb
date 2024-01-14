@@ -1,0 +1,83 @@
+<div class="row" *ngIf="true">
+  <div class="col">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bgBreadCrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/tableauDeBord']">Home</a></li>
+        <li class="breadcrumb-item"><a href="#" [routerLink]="['/Nve_Compagne']">Compagne</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Devis</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<!-- List Devis -->
+<div class="card mb-4 CompagneCard" *ngIf="true">
+
+  <div class="card-header">
+    <i class="fas fa-table mr-1"></i>
+    Devis
+  </div>
+
+  <div class="card-body">
+
+    <div class="row">
+      <div class="col-md table-responsive">
+        <table class="table table-bordered" width="100%" cellspacing="0">
+
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Region compagne</th>
+              <th>Nombre des villes</th>
+  
+              <th>Nombre des business</th>
+              <th>Coût de business</th>
+              <th>Coût Total</th>
+  
+              <th></th>
+            </tr>
+          </thead>
+  
+          <tbody>
+  
+            <tr *ngIf="!showList">
+              <td colspan="7" style="text-align: center;">
+                <div class="spinner-grow" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+                <div>
+                  <p>Loading...</p>
+                </div>
+              </td>
+            </tr>
+  
+            <tr *ngFor="let devis of listDevis | paginate: { itemsPerPage: nbrItemPerPage, currentPage: page }">
+              <td>{{ devis.customerName }}</td>
+              <td>{{ devis.regionName }}</td>
+              <td>{{ devis.townsNumber }}</td>
+              <td>{{ devis.nbrBusinesses }}</td>
+  
+              <td> {{ devis.businessCost | currency:'EUR':'symbol':'3.2-2':'fr' }} </td>
+              <td> {{ devis.totalCost | currency:'EUR':'symbol':'3.2-2':'fr' }} </td>
+  
+              <td class="linkBtn" style="cursor: pointer;" (click)='goToDetails(devis.id)'>
+                <i class="fas fa-info-circle"></i>
+              </td>
+  
+            </tr>
+  
+          </tbody>
+  
+        </table>
+      </div>
+  </div>    
+
+    <div class="row">
+      <div class="col-md">
+        <pagination-controls (pageChange)="page = $event" class="float-right"></pagination-controls>
+      </div>
+    </div>
+
+  </div>
+
+</div>

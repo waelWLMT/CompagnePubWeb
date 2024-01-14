@@ -1,0 +1,225 @@
+<div class="row">
+    <div class="col">
+        <nav aria-label="breadcrumb ">
+            <ol class="breadcrumb bgBreadCrumb">
+                <li class="breadcrumb-item"><a [routerLink]="['/tableauDeBord']">Home</a></li>
+                <li class="breadcrumb-item"><a [routerLink]="['/Lst_Devis_Compagnes']">Compagnes</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Facture</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="card mb-4 CompagneCard">
+
+
+    <!-- Loading Body -->
+    <div class="card-body" *ngIf="!displayDetails">
+
+        <div class="row">
+            <div class="col" style="text-align: center;">
+                <div class="spinner-border" role="status" style="color: gray;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div style="color: gray;">
+                    Chargement en cours ...
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Facture Body -->
+    <div class="card-body" *ngIf="displayDetails">
+
+        <!-- Titre Facture -->
+        <div class="row">
+            <div class="col-md" style="text-align: center;">
+                <h2>{{ 'Facture' | uppercase }}</h2>
+            </div>
+        </div>
+
+        <!-- Line 2 Client Etat Facture ... -->
+        <div class="row" style="margin-top: 2%;">
+
+            <div class="col-md-3" style="text-align: left;">
+
+                <table style="width: inherit;">
+
+                    <tbody>
+                        <tr>
+                            <td style="width: 40%;">
+                                <span class="detailsColLabel">
+                                    Client:
+                                </span>
+                            </td>
+                            <td style="width: 60%;">
+                                <span class="detailsColValue float-left badge">
+                                    {{ details.customer.name}}
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 40%;">
+                                <span class="detailsColLabel">
+                                    Etat:
+                                </span>
+                            </td>
+                            <td style="width: 60%;">
+                                <span class="detailsColValue float-left badge">
+                                    Validé
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 40%;">
+                                <span class="detailsColLabel">
+                                    Region:
+                                </span>
+                            </td>
+                            <td style="width: 60%;">
+                                <span class="detailsColValue float-left badge">
+                                    {{ details.regionName}}
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 40%;">
+                                <span class="detailsColLabel">
+                                    Nbr villes
+                                </span>
+                            </td>
+                            <td style="width: 60%;">
+                                <span class="detailsColValue float-left badge">
+                                    {{ details.nbrTowns }}
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="col-md" style="text-align: right">
+
+                <span class="detailsColLabel" style="text-align: left;">
+                    Tunis le,
+                </span>
+
+                <span class="detailsColValue badge">
+                    {{ details.createdAt| date:'dd/MM/yyy' }}
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- Line 3 Body Facture -->
+        <!-- details products list-->
+        <div class="row" style="margin-top: 3%;">
+            <div class="col-md table-responsive">
+
+                <table class="table table-bordered" style="width:100%;" cellspacing="0">
+
+                    <thead>
+
+                        <tr style="border-style:hidden;">
+                            <th colspan="4" style="text-align: left;" scope="col">
+                                <span style="font-size: 25px; color: #707070;">
+                                    List des produits
+                                </span>
+                            </th>
+                        </tr>                       
+
+                        <tr style="background-color: #D3D3D3;">
+                            <th scope="col">Type de produit</th>
+                            <th scope="col">Nombre de produit par type de business</th>
+                            <th scope="col">Prix unitaire</th>
+                            <th scope="col">Prix par type de business</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let product of details.billProducts">
+                            <td>{{ product.productTypeName }}</td>
+                            <td>{{ product.nbrProductPerBusiness }}</td>
+                            <td>{{ product.finalUnitPrice | currency:'EUR':'symbol':'3.2-2':'fr' }}</td>
+                            <td>{{ product.costPerBusiness | currency:'EUR':'symbol':'3.2-2':'fr' }}</td>                            
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <!-- Line 4 Body Facture -->
+        <!-- details Business types list-->
+        <div class="row">
+            <div class="col-md table-responsive">
+                <table class="table table-bordered" style="width: 100%;" cellspacing="0">
+
+                    <thead>                     
+
+                        <tr>
+                            <th colspan="4" style="text-align: left; border: none;" scope="col">  
+                                <span style="font-size: 25px; color: #707070;">
+                                    List des business
+                                </span>                              
+                            </th>
+
+                            <td style="border: none;">
+                                <span class="detailsColLabel">
+                                    Nbr business:
+                                </span>
+                                <span class="detailsColValue badge">
+                                    {{ details.billBusinesses.length }}
+                                </span>
+                            </td>                            
+                            <td style="border: none;">
+                                <span class="detailsColLabel">
+                                    Net à payer:
+                                </span>
+
+                                <span class="detailsColValue badge">
+                                    {{ details.finalTotalCost | currency:'EUR':'symbol':'3.2-2':'fr' }}
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr style="background-color: #D3D3D3;">
+                            <th scope="col">Ville</th>
+                            <th scope="col">Type de business</th>
+                            <th scope="col">Nom de business</th>
+                            <th scope="col">Latitude</th>
+                            <th scope="col">Longitude</th>
+                            <th scope="col">Cout de business</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let business of details.billBusinesses">
+                            <td>{{ business.townName}}</td>
+                            <td>{{ business.businessTypeName}}</td>
+                            <td>{{ business.businessName}}</td>
+                            <td>{{ business.lat}}</td>
+                            <td>{{ business.lng}}</td>
+                            <td>{{ business.businessCost | currency:'EUR':'symbol':'3.2-2':'fr' }}</td>
+                        </tr>
+                        
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
