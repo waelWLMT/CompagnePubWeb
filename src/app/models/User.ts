@@ -10,4 +10,5 @@ export class User{
     clientId? : number;
     createdAt?: Date
     menus?: any;  
+    login: string;
 }

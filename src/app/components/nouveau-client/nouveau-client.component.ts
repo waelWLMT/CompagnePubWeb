@@ -31,18 +31,20 @@ export class NouveauClientComponent implements OnInit {
       });
   }
 
-  buildCustomerModel(formValue: any) {
+  buildCustomerModel(form: any) {
+
+    let formValue = form.value;
 
     let address: Address = new Address();
 
     address.street = formValue.street != undefined ? formValue.street : '';
     address.townName = formValue.townName != undefined ? formValue.townName : '';
-    address.countryName = formValue.countryName != undefined ? formValue.countryName : '';
+    address.countryName = 'France';
 
     let customer: Customer = new Customer();
 
     customer.name = formValue.name;
-    customer.taxIdNumber = formValue.taxIdNumber;
+    customer.sirenSiret = formValue.sirenSiret;
     customer.mail = formValue.mail;
     customer.telNumber = formValue.telNumber;
 
@@ -50,21 +52,24 @@ export class NouveauClientComponent implements OnInit {
     return customer;
   }
 
-  buildErreurMessage(controls) {
+  buildErreurMessage(form) {
+    
+    let controls = form.controls;   
+    
     let msg = "Veuillez remplir les champs suivant:";
 
     if(controls.name.status == "INVALID"){
       msg += "<br>" +"name";
     }
     
-    if(controls.taxIdNumber.status == "INVALID"){
+    if(controls.sirenSiret.status == "INVALID"){
       msg += "<br>" +"Matricule fiscale";
     }
 
     if(controls.telNumber.status == "INVALID"){
       msg += "<br>" +"Numéro de téléphone";
     }
-
+    
     if(controls.mail.status == "INVALID"){
       msg += "<br>" +"EMAIL";
     }
@@ -88,7 +93,7 @@ export class NouveauClientComponent implements OnInit {
   ajouterClient(f: NgForm) {
 
     if (!f.valid) {
-      this.buildErreurMessage(f.controls);
+      this.buildErreurMessage(f);
     }
 
     if (f.valid) {
@@ -103,7 +108,7 @@ export class NouveauClientComponent implements OnInit {
       })
       .then((result) => {
         if (result.value) {   
-          let customer = this.buildCustomerModel(f.value);
+          let customer = this.buildCustomerModel(f);
           this.clientService.addClient(customer)
             .subscribe(response => {
               Swal.fire(

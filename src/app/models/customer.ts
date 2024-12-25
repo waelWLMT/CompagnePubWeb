@@ -2,7 +2,7 @@ import { Address } from './Address';
 
 export class Customer{    
     name : string;
-    taxIdNumber : string;
+    sirenSiret : string;
     mail : string;
     telNumber : string  ;
     address : Address; 

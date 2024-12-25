@@ -62,15 +62,15 @@ export class LoginComponent implements OnInit {
 
     if (valid) {
 
-      Swal.fire({
-        title: '  Connexion en cours!',
-        html: 'Veuillez patienter SVP',
-        showConfirmButton: false,
-        allowOutsideClick: false,
-        onBeforeOpen: () => {
-          Swal.showLoading()
-        },
-      });
+      // Swal.fire({
+      //   title: '  Connexion en cours!',
+      //   html: 'Veuillez patienter SVP',
+      //   showConfirmButton: false,
+      //   allowOutsideClick: false,
+      //   onBeforeOpen: () => {
+      //     Swal.showLoading()
+      //   },
+      // });
 
       this.authService.login(userName, password)
         .pipe(
@@ -81,12 +81,12 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/']);            
           },
           error => {
-            Swal.fire({
-              title: "Erreur",
-              text: error,
-              icon: "error",
-              timer: 1500,
-            });
+            // Swal.fire({
+            //   title: "Erreur",
+            //   text: error,
+            //   icon: "error",
+            //   timer: 1500,
+            // });
           });
     }
 

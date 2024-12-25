@@ -66,11 +66,13 @@ export class NouveauUserComponent implements OnInit {
     userDto.lastName = userFormValue.lastName;
     userDto.matricule = userFormValue.matricule;
     userDto.Email = userFormValue.mail;
+    userDto.login = userFormValue.userName;
 
     userDto.telNumber = userFormValue.telNumber;
     userDto.roleId = this.selectedRoleId;
     userDto.password = userFormValue.password;
     userDto.clientId = userDto.roleId == 2 ? this.selectedCustomerId : -1;
+    
 
     return userDto;
 
@@ -113,6 +115,11 @@ export class NouveauUserComponent implements OnInit {
       message += "<br> Role";
     }
 
+    if(formControls.userName.status == "INVALID"){
+      valid = false;
+      message += "<br> Nom utilisateur";
+    }
+
     if(formControls.password.status == "INVALID"){
       valid = false,
       message += "<br> Mot de passe";
@@ -133,30 +140,7 @@ export class NouveauUserComponent implements OnInit {
       Swal.fire('Erreur', message, 'error');
 
     return valid;
-
-    /*
-    let valid = true;
-    let message = '';
-
-    if (!userForm.valid) {
-      message = 'Veuillez renseigner tous les champs obligatoires !';
-      valid = false;
-    }
-
-    if (userForm.value.password !== userForm.value.confirmePassword) {
-      message = 'mot de passe de confirmation non valide !';
-      valid = false;
-    }
-
-    if (!valid)
-      Swal.fire('Erreur', message, 'error');
-
-    return valid;
-
-*/
-
-    
-
+   
   }
 
   public ajouterUtilisateur(userForm) {

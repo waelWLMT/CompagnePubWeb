@@ -45,11 +45,13 @@
                       </div>
 
                       <div class="form-group col-md-6">
-                        <label class="control-label required" for="taxIdNumber">Matricule fiscal</label>
-                        <input type="text" class="form-control username" ngModel id="taxIdNumber"  placeholder="Matricule fiscal" name="taxIdNumber" required
+                        <label class="control-label required" for="sirenSiret">SIREN / SIRET</label>
+                        <input type="text" class="form-control username" ngModel id="sirenSiret" 
+                         placeholder="Numero d'identification d'établissement" name="sirenSiret"
+                         pattern="^\d{9}$|^\d{14}$" required
                         [ngClass]="{
-                          'is-valid': clientForm.submitted && clientForm.controls.taxIdNumber.valid ,
-                          'is-invalid': clientForm.submitted && clientForm.controls.taxIdNumber.invalid
+                          'is-valid': clientForm.submitted && clientForm.controls.sirenSiret.valid ,
+                          'is-invalid': clientForm.submitted && clientForm.controls.sirenSiret.invalid
                         }" >
                       </div>
 
@@ -59,7 +61,9 @@
 
                       <div class="form-group col-md-6">
                         <label class="control-label required" for="telNumber">Numéro de téléphone</label>
-                        <input type="text" class="form-control username" ngModel id="telNumber" placeholder="Numéro de téléphone" name="telNumber" required
+                        <input type="text" class="form-control username" ngModel id="telNumber"
+                         placeholder="Numéro de téléphone" name="telNumber" 
+                         pattern = "^(33|0)(1|2|6|7|9)\d{8}$" required
                         [ngClass]="{
                           'is-valid': clientForm.submitted && clientForm.controls.telNumber.valid ,
                           'is-invalid': clientForm.submitted && clientForm.controls.telNumber.invalid
@@ -92,8 +96,8 @@
                     <div class="form-row">
 
                       <div class="form-group col-md-4">
-                        <label class="control-label required" for="street">Rue</label>
-                        <input type="text" class="form-control username"  ngModel id="street" placeholder="Rue" name="street" required
+                        <label class="control-label required" for="street">Rue / Boulevard</label>
+                        <input type="text" class="form-control username"  ngModel id="street" placeholder="Rue ou Boulevard" name="street" required
                         [ngClass]="{
                           'is-valid': clientForm.submitted && clientForm.controls.street.valid ,
                           'is-invalid': clientForm.submitted && clientForm.controls.street.invalid
@@ -101,8 +105,8 @@
                       </div>
 
                       <div class="form-group col-md-4">
-                        <label class="control-label required" for="townName">Cité</label>
-                        <input type="text" class="form-control email" ngModel id="townName" placeholder="Cité" name="townName" required 
+                        <label class="control-label required" for="townName">Commune</label>
+                        <input type="text" class="form-control" ngModel id="townName" placeholder="Ville" name="townName" required 
                         [ngClass]="{
                           'is-valid': clientForm.submitted && clientForm.controls.townName.valid ,
                           'is-invalid': clientForm.submitted && clientForm.controls.townName.invalid
@@ -111,12 +115,18 @@
 
                       <div class="form-group col-md-4">
                         <label class="control-label required" for="countryName">Pays</label>
-                        <input type="text" class="form-control email" ngModel id="countryName" placeholder="Pays" name="countryName" required
+                        <input type="text" class="form-control" id="countryName" name="countryName" value="France" disabled>
+                      </div>
+
+                      <!--<div class="form-group col-md-4">
+                        <label class="control-label required" for="countryName">Pays</label>
+                        <input type="text" class="form-control" ngModel id="countryName" placeholder="Pays" name="countryName"
+                        value="France" required
                         [ngClass]="{
                           'is-valid': clientForm.submitted && clientForm.controls.countryName.valid ,
                           'is-invalid': clientForm.submitted && clientForm.controls.countryName.invalid
                         }">
-                      </div>
+                      </div>-->
 
                     </div>
                   </div>
@@ -179,7 +189,7 @@
             <tbody>
               <tr *ngFor="let customer of customersList | paginate: { itemsPerPage: nbrItemPerPage, currentPage: page } ">
                 <td>{{ customer.name }}</td>
-                <td>{{ customer.taxIdNumber }}</td>
+                <td>{{ customer.sirenSiret }}</td>
                 <td>{{ customer.mail }}</td>
                 <td>{{ customer.telNumber }}</td>
                 <td>

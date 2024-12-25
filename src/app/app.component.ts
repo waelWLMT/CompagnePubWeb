@@ -19,8 +19,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe = new Subject<void>();
 
-  constructor(private upperCasePipe: UpperCasePipe, private authService: AuthenticationService, private router: Router) {
-
+  constructor(private upperCasePipe: UpperCasePipe, private authService: AuthenticationService, private router: Router) {   
+  
     this.setCurrentUser();
     this.setCurrentMenues();
 
@@ -48,7 +48,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    
+  }
 
   getConnectedUserName() {
 
