@@ -45,9 +45,7 @@ export class MenusComponent implements OnInit {
 
     });
     this.parentMenus = parents;
-    this.displayMenusList = true;
-
-    console.log(this.parentMenus);
+    this.displayMenusList = true;    
   }
 
 }

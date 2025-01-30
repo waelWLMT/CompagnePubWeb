@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { title } from 'process';
-import { timer } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { User } from 'src/app/models/User';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 
@@ -16,7 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent implements OnInit {
 
-  loading = false; 
+  loading = false;
   error = '';
 
   constructor(private router: Router, private authService: AuthenticationService) {
@@ -27,9 +23,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-
-  ngOnInit() {}
-
+  ngOnInit() { }
 
   verifAuthetificationIdentiy(userName, password) {
 
@@ -62,31 +56,31 @@ export class LoginComponent implements OnInit {
 
     if (valid) {
 
-      // Swal.fire({
-      //   title: '  Connexion en cours!',
-      //   html: 'Veuillez patienter SVP',
-      //   showConfirmButton: false,
-      //   allowOutsideClick: false,
-      //   onBeforeOpen: () => {
-      //     Swal.showLoading()
-      //   },
-      // });
+      Swal.fire({
+        title: '  Connexion en cours!',
+        html: 'Veuillez patienter SVP',
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        willOpen: () => {
+          Swal.showLoading()
+        },
+      });     
 
+      
       this.authService.login(userName, password)
-        .pipe(
-          first())
+        .pipe(first())
         .subscribe(
           data => {
             Swal.close();
-            this.router.navigate(['/']);            
+            this.router.navigate(['/']);
           },
           error => {
-            // Swal.fire({
-            //   title: "Erreur",
-            //   text: error,
-            //   icon: "error",
-            //   timer: 1500,
-            // });
+            Swal.fire({
+              title: "Erreur",
+              text: "Login ou mot de passe incorrect",
+              icon: "error",
+              timer: 3000,
+            });
           });
     }
 

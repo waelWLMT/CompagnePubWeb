@@ -19,8 +19,7 @@
         "@schematics/angular:guard": {
           "skipTests": true
         },
-        "@schematics/angular:module": {
-        },
+        "@schematics/angular:module": {},
         "@schematics/angular:pipe": {
           "skipTests": true
         },
@@ -35,6 +34,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "lodash"
+            ],
             "outputPath": "dist/CompagnWebApp",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -44,15 +46,15 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
+            "styles": [              
               "./node_modules/animate.css/animate.css",
               "./node_modules/@fortawesome/fontawesome-free/scss/brands.scss",
               "./node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
               "./node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
               "./node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
               "./node_modules/angular-bootstrap-md/assets/scss/mdb.scss",
-              "./node_modules/angular-bootstrap-md/assets/scss/bootstrap/bootstrap.scss",
-              "src/styles.scss"
+              "./node_modules/angular-bootstrap-md/assets/scss/bootstrap/bootstrap.scss" ,
+              "src/styles.scss"             
             ],
             "scripts": [
               "./node_modules/chart.js/dist/Chart.js",
@@ -99,7 +101,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "CompagnWebApp:build"            
+            "browserTarget": "CompagnWebApp:build"
           },
           "configurations": {
             "production": {
