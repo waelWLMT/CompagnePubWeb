@@ -109,16 +109,19 @@
                                                     [ngClass]="{
                                                         'is-valid': userForm.submitted && userForm.controls.userName.valid ,
                                                         'is-invalid': userForm.submitted && userForm.controls.userName.invalid
-                                                      }">
+                                                      }"
+                                                      autocomplete="off">
                                             </div>
 
                                             <div class="form-group col-md">
                                                 <label class="control-label required" for="mail">Mot de passe</label>
-                                                <input type="password" class="form-control email" ngModel id="password" placeholder="Mot de passe" name="password" required password
+                                                <input type="password" class="form-control email" 
+                                                ngModel id="password" placeholder="Mot de passe" name="password" required password
                                                 [ngClass]="{
                                                     'is-valid': userForm.submitted && userForm.controls.password.valid ,
                                                     'is-invalid': userForm.submitted && userForm.controls.password.invalid
-                                                  }">
+                                                  }"                                                  
+                                                  autocomplete="off">
                                             </div>
 
                                             <div class="form-group col-md">
