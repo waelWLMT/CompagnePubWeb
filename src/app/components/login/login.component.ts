@@ -25,6 +25,21 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() { }
 
+  showOrHidePassword(){
+
+    let htmlPasswordElement = document.getElementById("password") as HTMLElement;
+    let type = htmlPasswordElement.getAttribute("type") === "password" 
+    ? "text" 
+    : "password";
+
+    htmlPasswordElement.attributes["type"].value = type;  
+
+    let htmlEyeElement = document.getElementById("togglePassword");
+    htmlEyeElement.classList.toggle("bi-eye");
+
+
+  }
+
   verifAuthetificationIdentiy(userName, password) {
 
 
