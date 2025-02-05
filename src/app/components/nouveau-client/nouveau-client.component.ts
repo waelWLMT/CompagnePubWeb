@@ -63,7 +63,7 @@ export class NouveauClientComponent implements OnInit {
     }
     
     if(controls.sirenSiret.status == "INVALID"){
-      msg += "<br>" +"Matricule fiscale";
+      msg += "<br>" +"SIRET/SIRET";
     }
 
     if(controls.telNumber.status == "INVALID"){

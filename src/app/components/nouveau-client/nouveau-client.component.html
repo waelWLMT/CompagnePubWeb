@@ -47,7 +47,7 @@
                       <div class="form-group col-md-6">
                         <label class="control-label required" for="sirenSiret">SIREN / SIRET</label>
                         <input type="text" class="form-control username" ngModel id="sirenSiret" 
-                         placeholder="Numero d'identification d'établissement" name="sirenSiret"
+                         placeholder="SIRET(14 chiffres)  SIREN(8 chiffres)" name="sirenSiret"
                          pattern="^\d{9}$|^\d{14}$" required
                         [ngClass]="{
                           'is-valid': clientForm.submitted && clientForm.controls.sirenSiret.valid ,
