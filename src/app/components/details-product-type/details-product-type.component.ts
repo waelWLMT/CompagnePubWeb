@@ -98,22 +98,7 @@ export class DetailsProductTypeComponent implements OnInit {
         }
   
       });
-    }
-
-    /*
-   let valid = this.verifModel(modalProductType);
-
-   if(valid){
-     this.productTypeService.updateProductType(modalProductType.id, modalProductType)
-     .subscribe(response=>{
-        this.route.navigateByUrl("");
-     },error=>{
-       console.log(error);
-      });
-
-
-      */
-   
+    }    
 
   }
   

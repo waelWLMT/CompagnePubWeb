@@ -35,13 +35,7 @@ export class CampaignService {
 
     return this.httpClient.post(url, formData, )
 
-    // old code
-    /*let url = this.apiUrl + '/Campaign/UpdateCampaignBusinessState/';
-    url += businessUpdateDto.campaignId;
-
-    return this.httpClient.put(url, businessUpdateDto);
-    */
-   
+      
   }
 
 

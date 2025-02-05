@@ -158,7 +158,7 @@
                                 <th>Largeur</th>
                                 <th>Unité de mesure</th>
                                 <th>Description</th>
-                                <!--<th></th>-->
+                               
                             </tr>
                         </thead>
 
@@ -176,17 +176,14 @@
                             </tr>
 
                             <tr *ngFor="let productType of productTypesList | paginate: { itemsPerPage: nbrItemPerPage, currentPage: page }">
+                               
                                 <td>{{ productType.name }}</td>
                                 <td>{{ productType.price }}</td>
                                 <td>{{ productType.color }}</td>
                                 <td>{{ productType.size != null ? productType.size.height : ''}}</td>
                                 <td>{{ productType.size != null ? productType.size.width : ''}}</td>
                                 <td>{{ productType.size != null ? productType.size.unit : ''}}</td>
-                                <td>{{ productType.description}}</td>
-
-                                <!--<td class="linkBtn" style="cursor: pointer;" (click)='goToDetails(productType)'>
-                                    <i class="fas fa-edit"></i>                          
-                                </td>-->
+                                <td>{{ productType.description}}</td>                               
 
                             </tr>
 

@@ -1,8 +1,7 @@
 <!-- New Code for navigation menu -->
 <div class="nav">
     <div *ngFor="let menu of parentMenus">
-
-        <!--[routerLink]="child.link"-->
+       
         <a class="nav-link" [routerLink]="menu.parent.link" *ngIf="menu.parent.id===1 || menu.parent.id === 29">
             <div class="sb-nav-link-icon">               
                <i [class]="menu.parent.iconLibelle"></i>
