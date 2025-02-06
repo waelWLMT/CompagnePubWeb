@@ -28,8 +28,7 @@
                     <thead>
                         <tr>
                             <th>Nom Type de produit</th>
-                            <th>Prix</th>
-                            <th>Couleur</th>
+                            <th>Prix</th>                            
                             <th>Hauteur</th>
 
                             <th>Largeur</th>
@@ -55,11 +54,7 @@
                         <tr
                             *ngFor="let productType of productTypesList | paginate: { itemsPerPage: nbrItemPerPage, currentPage: page }">
                             <td>{{ productType.name }}</td>
-                            <td>{{ productType.price | currency:'EUR':'symbol':'3.2-2':'fr' }}</td>
-
-                            <td style="text-align: center;">
-                                <input type="color" [value]="productType.color" disabled>
-                            </td>
+                            <td>{{ productType.price | currency:'EUR':'symbol':'3.2-2':'fr' }}</td>                          
 
                             <td>
                                 <span class="badge badge-light" *ngIf="productType.size != null">

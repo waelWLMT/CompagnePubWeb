@@ -50,12 +50,7 @@
                                                 id="defaultPenetrationRate" placeholder="Taux de pénétration par défaut"
                                                 name="defaultPenetrationRate" required>
                                         </div>
-
-                                        <div class="form-group col-md">
-                                            <label class="control-label required" for="lastName">Couleur</label>
-                                            <input ejs-colorpicker type="color" class="form-control" id="colorValue"
-                                                required [(ngModel)]="colorValue" name="colorValue" />
-                                        </div>
+                                       
 
                                         <div class="col-md-4" style="text-align: center; ">
 
@@ -151,8 +146,7 @@
                         <thead>
                             <tr>
                                 <th>Nom Type de produit</th>
-                                <th>Prix</th>
-                                <th>Couleur</th>
+                                <th>Prix</th>                              
                                 <th>Hauteur</th>
 
                                 <th>Largeur</th>
@@ -178,8 +172,7 @@
                             <tr *ngFor="let productType of productTypesList | paginate: { itemsPerPage: nbrItemPerPage, currentPage: page }">
                                
                                 <td>{{ productType.name }}</td>
-                                <td>{{ productType.price }}</td>
-                                <td>{{ productType.color }}</td>
+                                <td>{{ productType.price }}</td>                                
                                 <td>{{ productType.size != null ? productType.size.height : ''}}</td>
                                 <td>{{ productType.size != null ? productType.size.width : ''}}</td>
                                 <td>{{ productType.size != null ? productType.size.unit : ''}}</td>

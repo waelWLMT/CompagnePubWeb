@@ -52,7 +52,7 @@
         </div>
 
         <!--Line 2-->
-        <div class="row" style="margin-top: 1%;">
+        <div class="row" style="margin-top: 1%;" *ngIf="details.size">
 
             <div class="col-md align-items">
                 <div class="BgColDetails">
@@ -81,11 +81,7 @@
             </div>
 
 
-            <div class="col-md align-items">
-                <div class="BgColDetails">
-                    <span class="detailsColLabel">Couleur</span>
-                    <span class="float-right detailsColValue">{{ details.color }} </span>
-                </div>
+            <div class="col-md align-items">                
             </div>
 
             
@@ -100,9 +96,9 @@
                 </div>
             </div>
 
-            <div class="col-md align-items">
+            <!--<div class="col-md align-items">
                
-            </div>
+            </div>-->
 
         </div>
 
@@ -167,9 +163,16 @@
                                         </div>
 
                                         <div class="form-group col-md">
-                                            <label class="control-label required" for="lastName">Couleur</label>
-                                            <input ejs-colorpicker type="color" class="form-control" id="colorValue"
-                                                required [(ngModel)]="modalProductType.color" name="colorValue" />
+                                            <div class="col-md-4" style="text-align: center; ">
+
+                                            <div class="form-group form-check"
+                                                style="margin-top: 40px; cursor: pointer;">
+                                                <input type="checkbox" id="acceptTerms" class="form-check-input"
+                                                    [(ngModel)]="hasSize" style="cursor: pointer;" name="hasSize" (change)="deletePoductSize()"/>
+                                                <label for="acceptTerms" class="form-check-label"
+                                                    style="cursor: pointer;">Edit Taille produit</label>
+                                            </div>
+                                        </div>
                                         </div>                                        
 
                                     </div>
@@ -177,22 +180,22 @@
                                     <div class="form-row">
 
                                         <div class="form-group col-md">
-                                            <label class="control-label required" for="lastName">Hauteur</label>
+                                            <label class="control-label" [ngClass] = "{'required' : hasSize}" for="height">Hauteur</label>
                                             <input type="number" class="form-control username" [(ngModel)]="modalProductType.size.height" id="height"
-                                                placeholder="Hauteur" name="height" required>
+                                                placeholder="Hauteur" name="height" [required] = "hasSize">
                                         </div>
 
                                         <div class="form-group col-md">
-                                            <label class="control-label required" for="name">Largeur</label>
+                                            <label class="control-label" [ngClass] = "{'required' : hasSize}" for="width">Largeur</label>
                                             <input type="number" class="form-control username" [(ngModel)]="modalProductType.size.width" id="width"
-                                                placeholder="Largeur" name="width" required>
+                                                placeholder="Largeur" name="width" [required] = "hasSize">
                                         </div>
 
                                         <div class="form-group col-md">
-                                            <label class="control-label required">Unité</label>
+                                            <label class="control-label" [ngClass] = "{'required' : hasSize}" for="unite">Unité</label>                                            
                                             <ng-select [items]="dimensionUnits" bindLabel="unitDescription" bindValue="id"
                                                 [multiple]="false" placeholder="Select unité"
-                                                [(ngModel)]="modalProductType.size.unit" name="unite">
+                                                [(ngModel)]="modalProductType.size.unit" name="unite" [required] = "hasSize">
                                             </ng-select>
                                         </div>
                                     </div>

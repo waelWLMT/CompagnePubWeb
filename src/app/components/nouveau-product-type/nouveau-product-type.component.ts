@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Browser } from 'protractor';
 import { ProductType } from 'src/app/models/PoductType';
 import { ProductTypeService } from 'src/app/services/product-type.service';
 
@@ -60,7 +59,7 @@ export class NouveauProductTypeComponent implements OnInit {
     productTypeDto.price = +formValue.price;    
     productTypeDto.description = formValue.description;
     
-    productTypeDto.color = formValue.colorValue != undefined ? formValue.colorValue : "";
+    
     productTypeDto.defaultNbrProductPerBusiness = formValue.defaultPenetrationRate;
    
     if(this.hasSize){

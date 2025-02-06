@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Size } from 'src/app/models/Size';
 import { ProductTypeService } from 'src/app/services/product-type.service';
 import Swal from 'sweetalert2';
 
@@ -10,6 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class DetailsProductTypeComponent implements OnInit {
 
+  public hasSize = false;
   public details;
   public modalProductType;
   public displayDetails: boolean = false;
@@ -21,8 +23,13 @@ export class DetailsProductTypeComponent implements OnInit {
     this.getDetailProductTypeById();
   }
 
-  setmodalProductType(){
+  setmodalProductType(){    
+    
     this.modalProductType = this.details;
+
+    if(!this.modalProductType.size)
+      this.modalProductType.size = new Size();
+
   }
 
   verifModel(modalProductType){
@@ -31,22 +38,41 @@ export class DetailsProductTypeComponent implements OnInit {
 
     if(modalProductType.name == undefined || modalProductType.name == ''){
       valid = false;
-      msg = "<br> Product type";
+      msg += "<br> Product type";
     }
 
     if(modalProductType.price == undefined || modalProductType.price == ''){
       valid = false;
-      msg = "<br> Prix";
+      msg += "<br> Prix";
     }
 
     if(modalProductType.defaultNbrProductPerBusiness == undefined || modalProductType.defaultNbrProductPerBusiness == '' || modalProductType.defaultNbrProductPerBusiness < 1 ){
       valid = false;
-      msg = "<br> Taux de penetration par business";
+      msg += "<br> Taux de penetration par business";
     }
 
     if(modalProductType.description == undefined || modalProductType.description == ''){
       valid = false;
-      msg = "<br> Description";
+      msg += "<br> Description";
+    }
+
+    if(this.hasSize){
+
+      if(!modalProductType.size.height){
+        valid = false;
+        msg += "<br> Hauteur";
+      }
+
+      if(!modalProductType.size.width){
+        valid = false;
+        msg += "<br> Largeur";
+      }
+
+      if(!modalProductType.size.unit){
+        valid = false;
+        msg += "<br> Unité";
+      }
+
     }
 
     if(!valid){
@@ -54,6 +80,12 @@ export class DetailsProductTypeComponent implements OnInit {
     }
 
     return valid;
+  }
+
+
+  deletePoductSize(){
+    if(!this.hasSize)
+      this.modalProductType.size = new Size();
   }
 
   update(modalProductType){
@@ -73,7 +105,8 @@ export class DetailsProductTypeComponent implements OnInit {
   
         let productTypeId = modalProductType.id;      
 
-        if (result.isConfirmed) {
+        if (result.isConfirmed) {          
+
           // il faut créer le web api
           this.productTypeService.updateProductType(productTypeId, modalProductType)
             .subscribe(response => {
@@ -111,6 +144,7 @@ export class DetailsProductTypeComponent implements OnInit {
     .subscribe(response=>{
       this.details = response;
       this.displayDetails = true;
+      this.hasSize = this.details.size != null ;
     }, error=>{ 
       console.log(error);
     });
