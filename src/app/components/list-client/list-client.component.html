@@ -27,7 +27,7 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th>Taxe Id Number</th>
+              <th>SIREN/SIRET</th>
               <th>Email</th>
               <th>Téléphone</th>
               <th>Adresse</th>
@@ -50,7 +50,7 @@
 
             <tr *ngFor="let customer of customersList | paginate: { itemsPerPage: nbrItemPerPage, currentPage: page } ">
               <td>{{ customer.name }}</td>
-              <td>{{ customer.taxIdNumber }}</td>
+              <td>{{ customer.sirenSiret }}</td>
               <td>{{ customer.mail }}</td>
               <td>{{ customer.telNumber }}</td>
 
