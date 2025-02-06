@@ -147,10 +147,7 @@
                             <tr>
                                 <th>Nom Type de produit</th>
                                 <th>Prix</th>                              
-                                <th>Hauteur</th>
-
-                                <th>Largeur</th>
-                                <th>Unité de mesure</th>
+                                <th>Taux de pénetration par business</th>
                                 <th>Description</th>
                                
                             </tr>
@@ -173,9 +170,7 @@
                                
                                 <td>{{ productType.name }}</td>
                                 <td>{{ productType.price }}</td>                                
-                                <td>{{ productType.size != null ? productType.size.height : ''}}</td>
-                                <td>{{ productType.size != null ? productType.size.width : ''}}</td>
-                                <td>{{ productType.size != null ? productType.size.unit : ''}}</td>
+                                <td>{{ productType.defaultNbrProductPerBusiness}}</td>
                                 <td>{{ productType.description}}</td>                               
 
                             </tr>

@@ -28,11 +28,8 @@
                     <thead>
                         <tr>
                             <th>Nom Type de produit</th>
-                            <th>Prix</th>                            
-                            <th>Hauteur</th>
-
-                            <th>Largeur</th>
-                            <th>Unité</th>
+                            <th>Prix</th> 
+                            <th>Taux de pénetration par business</th>  
                             <th>Description</th>
                             <th></th>
                         </tr>
@@ -54,30 +51,9 @@
                         <tr
                             *ngFor="let productType of productTypesList | paginate: { itemsPerPage: nbrItemPerPage, currentPage: page }">
                             <td>{{ productType.name }}</td>
-                            <td>{{ productType.price | currency:'EUR':'symbol':'3.2-2':'fr' }}</td>                          
-
-                            <td>
-                                <span class="badge badge-light" *ngIf="productType.size != null">
-                                    {{ productType.size != null ? productType.size.height +' '+
-                                    getDimensionUnit(productType.size.unit) : ''}}
-                                </span>
-                            </td>
-
-                            <td>
-                                <span class="badge badge-light" *ngIf="productType.size != null">
-                                    {{ productType.size != null ? productType.size.width +' '+
-                                    getDimensionUnit(productType.size.unit) : ''}}
-                                </span>
-                            </td>
-
-                            <td>
-                                <span class="badge badge-light" *ngIf="productType.size != null">
-                                    {{ productType.size != null ? getDimensionUnit(productType.size.unit) : ''}}
-                                </span>
-                            </td>
-
+                            <td>{{ productType.price | currency:'EUR':'symbol':'3.2-2':'fr' }}</td> 
+                            <td>{{ productType.defaultNbrProductPerBusiness}}</td>
                             <td>{{ productType.description}}</td>
-
                             <td class="linkBtn" style="cursor: pointer;" (click)='goToDetails(productType)'>
                                 <i class="fas fa-info-circle"></i>
                             </td>
