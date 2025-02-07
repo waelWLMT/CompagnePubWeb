@@ -70,7 +70,7 @@
 
         </div>
 
-         <!--Line 22-->
+         <!--Line 3-->
          <div class="row" style="margin-top: 1%;">
 
             <div class="col-md align-items">
@@ -85,7 +85,7 @@
 
         </div>
 
-        <!-- Line 3 -->
+        <!-- Line 4 -->
         <div class="row" style="margin-top: 1%;">
 
             <div class="col-md align-items">
@@ -115,7 +115,7 @@
 
         </div>
 
-        <!-- Line 4 -->
+        <!-- Line 5 -->
         <div class="row" style="margin-top: 1%;" *ngIf="user.clientId === 2">
             <div class="col-md-6 align-items ">
                 <div class="BgColDetails">
@@ -196,6 +196,19 @@
                                     <label class="required">Mot de passe</label>
                                     <input type="password" class="form-control" placeholder="Mot de passe" id="password"
                                         name="password" [(ngModel)]="modalUser.password">
+                                </div>
+
+                            </div>
+
+                            <div class="form-row" style="margin-top: 1%;">
+
+                                <div class="col">
+                                    <label class="required">User Name</label>
+                                    <input type="text" class="form-control" placeholder="User name" id="userName" name="userName"
+                                        [(ngModel)]="modalUser.login">
+                                </div>
+
+                                <div class="col">                                   
                                 </div>
 
                             </div>
