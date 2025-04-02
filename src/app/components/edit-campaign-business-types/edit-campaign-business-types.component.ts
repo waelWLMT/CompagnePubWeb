@@ -18,7 +18,7 @@ export class EditCampaignBusinessTypesComponent implements OnInit, OnChanges {
   public selectedBusnissType: any;
 
 
-  constructor(private businessTypeService: BusinessTypeService) { }
+  constructor(private readonly businessTypeService: BusinessTypeService) { }
  
   // stratigie à appliquer sur dans edit-type de poduit et edit-ville
   ngOnChanges(changes: SimpleChanges): void {    

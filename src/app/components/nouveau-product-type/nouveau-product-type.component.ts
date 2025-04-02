@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class NouveauProductTypeComponent implements OnInit {
 
-  constructor(private router : Router, private productTypeService : ProductTypeService) { }
+  constructor(private readonly router : Router, private productTypeService : ProductTypeService) { }
 
   public unitList = [{id : 1, description : 'mm'} , {id : 2, description : 'cm'}, {id : 1, description : 'mt'}  ];
   public selectedUnitId = 1;

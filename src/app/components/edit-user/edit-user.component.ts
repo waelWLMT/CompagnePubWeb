@@ -20,11 +20,11 @@ export class EditUserComponent {
 
   constructor(
    
-    private userService: UserService,
-    private clientService: ClientService,
-    private activatedRoute: ActivatedRoute,
-    private roleServices: RoleService,
-    private router: Router) { }
+    private readonly userService: UserService,
+    private readonly clientService: ClientService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly roleServices: RoleService,
+    private readonly router: Router) { }
   
 
   public customersList: any;

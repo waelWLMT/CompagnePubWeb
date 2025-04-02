@@ -27,7 +27,7 @@ export class EditCampaignComponent implements OnInit {
 
   public campaignState: any;
 
-  constructor(private campaignService: CampaignService, private datePipe: DatePipe, private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(private readonly campaignService: CampaignService, private readonly datePipe: DatePipe, private readonly activatedRoute: ActivatedRoute, private readonly router: Router) { }
 
 
   ngOnInit(): void {    

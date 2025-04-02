@@ -29,7 +29,7 @@ export class DetailsCompagnComponent implements OnInit {
     { stateId: 5, stateDescription: 'Annulée' }
   ];
 
-  constructor(private campaignService: CampaignService, private devisService: DevisService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(private readonly campaignService: CampaignService, private readonly devisService: DevisService, private readonly activatedRoute: ActivatedRoute, private readonly router: Router) { }
 
   ngOnInit(): void {
     this.getFileCampaign();

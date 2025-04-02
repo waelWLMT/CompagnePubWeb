@@ -56,14 +56,14 @@ export class ListCampaignComponent implements OnInit {
   ];
 
   constructor(
-    private campaignService: CampaignService, 
-    private router: Router,  
-    private datePipe: DatePipe, 
-    private clientService: ClientService,
-    private productTypeService: ProductTypeService,
-    private regionService: RegionService,
-    private businessTypeService: BusinessTypeService,
-    private townService: TownService
+    private readonly campaignService: CampaignService, 
+    private readonly router: Router,  
+    private readonly datePipe: DatePipe, 
+    private readonly clientService: ClientService,
+    private readonly productTypeService: ProductTypeService,
+    private readonly regionService: RegionService,
+    private readonly businessTypeService: BusinessTypeService,
+    private readonly townService: TownService
 
     ) { }
 

@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class NouveauClientComponent implements OnInit {
 
-  constructor(private clientService: ClientService, private router: Router) { }
+  constructor(private readonly clientService: ClientService,private readonly router: Router) { }
 
   public customersList: any;
   public page: any = 1;

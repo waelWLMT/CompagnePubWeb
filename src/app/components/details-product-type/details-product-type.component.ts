@@ -17,7 +17,7 @@ export class DetailsProductTypeComponent implements OnInit {
   public displayDetails: boolean = false;
   public dimensionUnits = [ { id: 1 , unitDescription: "mm"}, { id: 2 , unitDescription: "cm"}, { id: 3 , unitDescription: "mt"}];
 
-  constructor(private activatedRoute: ActivatedRoute, private route: Router, private productTypeService: ProductTypeService) { }
+  constructor(private readonly activatedRoute: ActivatedRoute, private readonly route: Router, private readonly productTypeService: ProductTypeService) { }
 
   ngOnInit(): void {
     this.getDetailProductTypeById();

@@ -13,7 +13,7 @@ export class DevisDetailsComponent implements OnInit {
   public displayDetails: any;
   public details:any;
 
-  constructor(private activatedRoute: ActivatedRoute, private devisService: DevisService) { }
+  constructor(private readonly activatedRoute: ActivatedRoute, private readonly devisService: DevisService) { }
 
   ngOnInit(): void {
     this.getDevisDetails();

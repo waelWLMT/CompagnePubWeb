@@ -15,7 +15,7 @@ export class ListClientComponent implements OnInit {
   public page: any = 1;
   public nbrItemPerPage: any = 5;
   
-  constructor(private clientService: ClientService, private router : Router) { }
+  constructor(private readonly clientService: ClientService, private readonly router : Router) { }
 
   ngOnInit(): void {
     this.getCustomersList();   

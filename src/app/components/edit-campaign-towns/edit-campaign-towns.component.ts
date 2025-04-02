@@ -28,7 +28,7 @@ export class EditCampaignTownsComponent implements OnInit, OnChanges {
   public centerMapPosition: any;
   public placesList : any[];
   
-  constructor(private townService: TownService) { }
+  constructor(private readonly townService: TownService) { }
  
   ngOnChanges(changes: SimpleChanges): void {
 

@@ -16,7 +16,7 @@ export class ListUserComponent implements OnInit {
   public page: any = 1;
   public nbrItemPerPage: any = 5;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private readonly userService: UserService, private readonly router: Router) { }
 
   ngOnInit(): void {
     this.getAllUsers();

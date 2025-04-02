@@ -16,7 +16,7 @@ export class ListDevisComponent implements OnInit {
   public page: any = 1;
   public nbrItemPerPage: any = 5;
 
-  constructor(private devisService: DevisService,private router: Router) { }
+  constructor(private readonly devisService: DevisService, private readonly router: Router) { }
 
   ngOnInit(): void {
 

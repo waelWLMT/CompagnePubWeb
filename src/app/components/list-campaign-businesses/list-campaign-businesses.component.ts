@@ -46,7 +46,7 @@ export class ListCampaignBusinessesComponent implements OnInit {
   public selectedBusiness: any;  
   public selectedCampaignId: any;
 
-  constructor(private campaignService: CampaignService, private activatedRoute: ActivatedRoute) { }
+  constructor(private readonly campaignService: CampaignService, private readonly activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.initCurrentUser();

@@ -44,14 +44,14 @@ export class NouveauCompagnComponent implements OnInit {
   public userClientName: any;
 
   constructor(
-    private datePipe: DatePipe,
-    private clientService: ClientService,
-    private productTypeService: ProductTypeService,
-    private regionService: RegionService,
-    private townService: TownService,
-    private businessTypeService: BusinessTypeService,
-    private campaignService: CampaignService,
-    private router: Router) { }
+    private readonly datePipe: DatePipe,
+    private readonly clientService: ClientService,
+    private readonly productTypeService: ProductTypeService,
+    private readonly regionService: RegionService,
+    private readonly townService: TownService,
+    private readonly businessTypeService: BusinessTypeService,
+    private readonly campaignService: CampaignService,
+    private readonly router: Router) { }
 
   ngOnInit(): void {
 

@@ -25,7 +25,7 @@ export class EditCampaignProductsComponent implements OnInit {
 
   public modalProduct:any;
   
-  constructor(private productTypeService: ProductTypeService) { }
+  constructor(private readonly productTypeService: ProductTypeService) { }
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));

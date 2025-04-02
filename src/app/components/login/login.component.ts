@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   error = '';
 
-  constructor(private router: Router, private authService: AuthenticationService) {
+  constructor(private readonly router: Router,private readonly authService: AuthenticationService) {
 
     // redirect to home if already logged in
     if (this.authService.userValue)

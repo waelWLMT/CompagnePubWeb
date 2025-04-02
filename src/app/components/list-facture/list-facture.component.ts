@@ -16,7 +16,7 @@ export class ListFactureComponent implements OnInit {
   public page: any = 1;
   public nbrItemPerPage: any = 5;
 
-  constructor(private factureService: FactureService, private router: Router) { }
+  constructor(private readonly factureService: FactureService,private readonly router: Router) { }
 
   ngOnInit(): void {
 

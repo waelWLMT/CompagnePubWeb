@@ -12,7 +12,7 @@ export class DetailsClientComponent implements OnInit {
   public customer;
   public modalCustomer;
   public displayDetails : boolean = false;
-  constructor(private clientService : ClientService, private activatedRoute : ActivatedRoute, private router : Router) { }
+  constructor(private readonly clientService : ClientService, private readonly activatedRoute : ActivatedRoute, private readonly router : Router) { }
 
   ngOnInit(): void {
     this.getCustomerById();

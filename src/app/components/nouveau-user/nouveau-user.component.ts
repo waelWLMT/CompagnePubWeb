@@ -1,4 +1,3 @@
-import { unsupported } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/User';
@@ -24,7 +23,7 @@ export class NouveauUserComponent implements OnInit {
   public page: any = 1;
   public nbrItemPerPage: any = 5;
 
-  constructor(private roleService: RoleService, private userService: UserService, private router: Router, private clientService: ClientService) { }
+  constructor(private readonly roleService: RoleService, private readonly userService: UserService, private readonly router: Router, private readonly clientService: ClientService) { }
 
   ngOnInit(): void {
     this.getAllUsers();

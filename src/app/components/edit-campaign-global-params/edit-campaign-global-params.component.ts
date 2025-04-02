@@ -15,7 +15,7 @@ export class EditCampaignGlobalParamsComponent implements OnInit {
   @Output() updateCampaignGlobalParmsEmmiter = new EventEmitter<any>();
   @Output() goToDetailsEmmitter = new EventEmitter<any>();
 
-  constructor(private datePipe: DatePipe) { }
+  constructor(private readonly datePipe: DatePipe) { }
 
 
   setDateFormat(){

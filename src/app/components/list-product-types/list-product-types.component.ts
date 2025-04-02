@@ -20,7 +20,7 @@ export class ListProductTypesComponent implements OnInit {
   public nbrItemPerPage: any = 5;
   public page: any = 1;
 
-  constructor(private productTypesService : ProductTypeService, private router: Router) { }
+  constructor(private readonly productTypesService : ProductTypeService, private readonly router: Router) { }
 
   ngOnInit(): void {
     this.getAllProductTypes();
