@@ -32,6 +32,7 @@
                             <th>Taux de pénetration par business</th>  
                             <th>Description</th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
 
@@ -54,8 +55,13 @@
                             <td>{{ productType.price | currency:'EUR':'symbol':'3.2-2':'fr' }}</td> 
                             <td>{{ productType.defaultNbrProductPerBusiness}}</td>
                             <td>{{ productType.description}}</td>
+                            
                             <td class="linkBtn" style="cursor: pointer;" (click)='goToDetails(productType)'>
                                 <i class="fas fa-info-circle"></i>
+                            </td>
+
+                            <td class="linkBtn" style="cursor: pointer;" (click)='activateDesactivateProductType(productType)'>
+                                <i class="fa fa-trash" aria-hidden="true"></i>   
                             </td>
 
                         </tr>

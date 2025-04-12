@@ -26,6 +26,18 @@ export class ListProductTypesComponent implements OnInit {
     this.getAllProductTypes();
   }
 
+  ActivateDesactivateProductType(productType){
+
+    this.productTypesService.activateDesactivateProductType(productType.id, !productType.activated)
+    .toPromise().then( res => {
+      console.log('product type deleted');
+      this.getAllProductTypes();
+    })
+
+
+    console.log("deleting product type");
+  }
+
   public getAllProductTypes(){
 
     this.showList = false;

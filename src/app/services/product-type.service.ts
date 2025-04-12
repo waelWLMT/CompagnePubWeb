@@ -8,31 +8,41 @@ import { ProductType } from '../models/PoductType';
   providedIn: 'root'
 })
 export class ProductTypeService {
-  
-  private apiUrl = environment.apiUrl;
 
-  constructor(private httpClient : HttpClient) { }
+  private readonly apiUrl = environment.apiUrl;
 
-  addProductType(product : ProductType) : Observable<any> {
-    let url = this.apiUrl +'/ProductType';
-    return this.httpClient.post<any>(url, product);    
+  constructor(private readonly httpClient: HttpClient) { }
+
+  desactivateProductTypye(id: any, activate: boolean) {
+    
+    let url = this.apiUrl + '/ProductType/activate';
+    url += '?id=' + id;
+    url += '&activate=' + activate;
+    
+    return this.httpClient.delete(url);
+    
+  }
+
+  addProductType(product: ProductType): Observable<any> {
+    let url = this.apiUrl + '/ProductType';
+    return this.httpClient.post<any>(url, product);
   }
 
   getAllProductTypes() {
-    let url = this.apiUrl +'/ProductType';
+    let url = this.apiUrl + '/ProductType';
     return this.httpClient.get(url);
   }
 
-  getProductTypeById(productId : number){
-    let url = this.apiUrl +'/ProductType/';
-    url+= productId;
+  getProductTypeById(productId: number) {
+    let url = this.apiUrl + '/ProductType/';
+    url += productId;
     return this.httpClient.get(url);
   }
 
-  updateProductType(id, productType){
-    let url = this.apiUrl+'/ProductType/';
+  updateProductType(id, productType) {
+    let url = this.apiUrl + '/ProductType/';
     return this.httpClient.put(url + id, productType);
   }
 
-  
+
 }
