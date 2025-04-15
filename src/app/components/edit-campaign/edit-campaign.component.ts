@@ -325,8 +325,7 @@ export class EditCampaignComponent implements OnInit {
 
         this.campaignService.addCampaignBusinessType(campaignId, businessTypeMapCode)
         .subscribe(response => {
-          this.campaign = response;
-  
+          this.campaign = response;  
           Swal.fire({
             icon: 'success',
             title: 'Succès',

@@ -13,14 +13,14 @@ export class ProductTypeService {
 
   constructor(private readonly httpClient: HttpClient) { }
 
-  desactivateProductTypye(id: any, activate: boolean) {
+  activateDesactivateProductType(id: any, activate: boolean) {
     
     let url = this.apiUrl + '/ProductType/activate';
     url += '?id=' + id;
     url += '&activate=' + activate;
     
     return this.httpClient.delete(url);
-    
+
   }
 
   addProductType(product: ProductType): Observable<any> {

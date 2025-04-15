@@ -39,7 +39,6 @@ export class ListDevisComponent implements OnInit {
     .subscribe(response=>{
       this.listDevis = response;
       this.showList =true;
-
       this.page = 1;
       
     }, error=>{ 

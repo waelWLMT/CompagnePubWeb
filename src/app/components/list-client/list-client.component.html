@@ -68,6 +68,10 @@
 
             </tr>
 
+            <tr *ngIf="showCustomersList && customersList.length == 0">
+              <td colspan="6" style="text-align: center;">Aucun élément à afficher</td>
+            </tr>
+
           </tbody>
 
         </table>

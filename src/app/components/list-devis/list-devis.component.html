@@ -27,12 +27,10 @@
             <tr>
               <th>Client</th>
               <th>Region compagne</th>
-              <th>Nombre des villes</th>
-  
+              <th>Nombre des villes</th>  
               <th>Nombre des business</th>
               <th>Coût de business</th>
-              <th>Coût Total</th>
-  
+              <th>Coût Total</th>  
               <th></th>
             </tr>
           </thead>
@@ -57,12 +55,14 @@
               <td>{{ devis.nbrBusinesses }}</td>
   
               <td> {{ devis.businessCost | currency:'EUR':'symbol':'3.2-2':'fr' }} </td>
-              <td> {{ devis.totalCost | currency:'EUR':'symbol':'3.2-2':'fr' }} </td>
-  
+              <td> {{ devis.totalCost | currency:'EUR':'symbol':'3.2-2':'fr' }} </td>  
               <td class="linkBtn" style="cursor: pointer;" (click)='goToDetails(devis.id)'>
                 <i class="fas fa-info-circle"></i>
-              </td>
-  
+              </td>  
+            </tr>
+
+            <tr *ngIf="showList && listDevis.length == 0">
+              <td colspan="7" style="text-align: center;">Aucun élément à afficher</td>
             </tr>
   
           </tbody>
