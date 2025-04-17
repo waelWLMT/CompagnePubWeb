@@ -14,7 +14,7 @@
           placeholder="Ajouter un produit à la compagne" [(ngModel)]="selectedProductTypeId" name="productTypeId">
         </ng-select>
       </div>
-
+      
       <div class="form-group col-md">
         <button type="button" class="btn btn-primary submitBtn" style="margin-top: 30px;" (click)="addCampaignProducts()" [disabled]="selectedProductTypeId == undefined">
           <i class="fa fa-plus" aria-hidden="true"></i> Ajouter

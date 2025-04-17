@@ -16,9 +16,7 @@ export class EditCampaignProductsComponent implements OnInit {
   @Output() addCampaignProductEmmiter = new EventEmitter<number>();
 
 
-  public currentUser: any;
-  
-  
+  public currentUser: any;  
   private showList:boolean = false;
   public productTypeList: any;
   public selectedProductTypeId: any;   
@@ -33,13 +31,35 @@ export class EditCampaignProductsComponent implements OnInit {
     this.getAllProductType();
   }
 
+  getEnabledItems(items){
+
+    let list =[];
+
+    items.forEach(item => {      
+      
+      let index = this.campaignProducts.findIndex(x=> item.id == x.productTypeId);     
+
+      if(index > -1)
+        item.disabled = true;
+      else
+        item.disabled = false;
+      
+      list.push(item);
+
+    });
+    
+    return list;
+    
+    
+  } 
+
   getAllProductType() {
 
     this.selectedProductTypeId = undefined;
 
     this.productTypeService.getAllProductTypes()
       .subscribe(data => {
-        this.productTypeList = data;
+        this.productTypeList = this.getEnabledItems(data);
       }, error => {
         console.log(error);
       });

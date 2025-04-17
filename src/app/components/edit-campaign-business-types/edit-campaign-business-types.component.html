@@ -11,7 +11,7 @@
 
             <div class="form-group col-md-4">
                 <label class="control-label required">Type de business</label>
-                <ng-select [items]="businessTypeList" bindLabel="code" bindValue="id"
+                <ng-select [items]="businessTypeList" bindLabel="tagValueDesignation" bindValue="id"
                     [multiple]="false" placeholder="Ajouter un type de business à la compagne"
                     [(ngModel)]="selectedBusnissType" name="businessTypeIds">
                 </ng-select>
@@ -47,8 +47,8 @@
                 </tr>
                 <tr *ngFor="let businessType of campaignBusinessTypes">
 
-                    <td>{{ businessType.code }}</td>
-                    <td class="deleteIcon" style="cursor: pointer;" (click)='deleteBusinessType(businessType.mapCode)'>
+                    <td>{{ businessType.tagValueDesignation }}</td>
+                    <td class="deleteIcon" style="cursor: pointer;" (click)='deleteBusinessType(businessType.id)'>
                         <i class="fa fa-trash" aria-hidden="true"></i>
                     </td>
                 </tr>

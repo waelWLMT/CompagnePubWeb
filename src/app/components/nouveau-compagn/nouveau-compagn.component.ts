@@ -71,12 +71,16 @@ export class NouveauCompagnComponent implements OnInit {
   }
 
   getAllBusinessTypes() {
+    
+    
     this.businessTypeService.getAllBusinessTypes()
       .subscribe(response => {
         this.businessTypeList = response;
+        console.log(response);
       }, error => {
         console.log(error);
       });
+
   }
 
   getTownsBySelectedRegion() {

@@ -9,9 +9,9 @@ import { CampaignBusinessUpdateDto } from '../models/CampaignBusinessUpdateDto';
 export class CampaignService {
  
 
-  private apiUrl: any = environment.apiUrl;
+  private readonly apiUrl: any = environment.apiUrl;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private readonly httpClient: HttpClient) { }
 
 
   //#region General campaign services
@@ -95,7 +95,6 @@ export class CampaignService {
 
   //#endregion
 
-
   //#region Towns Services
 
   getDetailedCampaignTownsList(campaignId) {
@@ -164,21 +163,21 @@ export class CampaignService {
 
   //#region Campaign Business types Services
 
-  addCampaignBusinessType(campaignId, businessTypeMapCode) {
+  addCampaignBusinessType(campaignId, businessTypeId) {
     let url = this.apiUrl + '/Campaign/addCampaignBusinessType/';
 
     url += campaignId + '/';
-    url += businessTypeMapCode;
+    url += businessTypeId;
 
     return this.httpClient.get(url);
   }
 
-  deleteCampaignBusinessType(campaignId, BusinessTypeMapCode) {
+  deleteCampaignBusinessType(campaignId, businessTypeId) {
 
     let url = this.apiUrl + '/Campaign/deleteCampaignBusinessType/';
 
     url += campaignId + '/';
-    url += BusinessTypeMapCode;
+    url += businessTypeId;
 
     return this.httpClient.delete(url);
   }
@@ -186,8 +185,5 @@ export class CampaignService {
 
 
   //#endregion
-
-
-
 
 }

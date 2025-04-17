@@ -26,8 +26,7 @@ export class EditCampaignBusinessTypesComponent implements OnInit, OnChanges {
      let first = changes["campaignBusinessTypes"].firstChange;
 
      if(!first){
-       this.businessTypeList = this.getEnabledItems(this.businessTypeList);
-       //this.getAllBusinessTypes();
+       this.businessTypeList = this.getEnabledItems(this.businessTypeList);       
      }    
 
   }
@@ -36,8 +35,8 @@ export class EditCampaignBusinessTypesComponent implements OnInit, OnChanges {
     this.getAllBusinessTypes();
   }
 
-  deleteBusinessType(mapCode) {
-    this.deletecampaignBusinessTypeEmmiter.emit(mapCode);
+  deleteBusinessType(businessTypeId) {
+    this.deletecampaignBusinessTypeEmmiter.emit(businessTypeId);
   }
 
   getEnabledItems(items){
@@ -46,8 +45,7 @@ export class EditCampaignBusinessTypesComponent implements OnInit, OnChanges {
 
     items.forEach(item => {      
       
-      let index = this.campaignBusinessTypes.findIndex(x=> item.id == x.id);
-      console.log(index);
+      let index = this.campaignBusinessTypes.findIndex(x=> item.id == x.id);     
 
       if(index > -1)
         item.disabled = true;
@@ -57,9 +55,7 @@ export class EditCampaignBusinessTypesComponent implements OnInit, OnChanges {
       list.push(item);
 
     });
-
-    console.log("flitred List");
-    console.log(list);
+    
     return list;
     
     

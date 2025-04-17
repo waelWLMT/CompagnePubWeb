@@ -49,8 +49,7 @@ export class EditCampaignTownsComponent implements OnInit, OnChanges {
 
     items.forEach(item => {      
       
-      let index = this.detailedCampaignTownsList.findIndex(x=> item.id == x.town.id);
-      console.log(index);
+      let index = this.detailedCampaignTownsList.findIndex(x=> item.id == x.town.id);     
 
       if(index > -1)
         item.disabled = true;
@@ -61,11 +60,7 @@ export class EditCampaignTownsComponent implements OnInit, OnChanges {
 
     });
 
-    console.log("flitred List");
-    console.log(list);
-    return list;
-    
-    
+    return list;    
   } 
   
   getListOfTowns(){    
@@ -76,9 +71,7 @@ export class EditCampaignTownsComponent implements OnInit, OnChanges {
       let fullEntity = false;
 
       this.townService.getTownsByRegion(regionId, fullEntity)
-        .subscribe(response => {
-          //this.townsList = response;
-
+        .subscribe(response => {          
           this.townsList = this.getEnabledItems(response);
           this.displaytownsToAdd= true;         
         }, error => {

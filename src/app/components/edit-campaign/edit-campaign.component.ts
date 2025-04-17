@@ -306,7 +306,7 @@ export class EditCampaignComponent implements OnInit {
 
 
   //#region ------------------------------------------- Begin Campaign Business types Management
-  addNewCampaignBusinessType(businessTypeMapCode) {
+  addNewCampaignBusinessType(businessTypeId) {
 
     let campaignId = this.campaign.id;
 
@@ -323,7 +323,7 @@ export class EditCampaignComponent implements OnInit {
 
       if (result.isConfirmed){
 
-        this.campaignService.addCampaignBusinessType(campaignId, businessTypeMapCode)
+        this.campaignService.addCampaignBusinessType(campaignId, businessTypeId)
         .subscribe(response => {
           this.campaign = response;  
           Swal.fire({
@@ -347,9 +347,9 @@ export class EditCampaignComponent implements OnInit {
       }});
   }
 
-  deleteCampaignBusinessTypeByMapCode(mapCode) {
+  deleteCampaignBusinessTypeByMapCode(businessTypeId) {
     let campId = this.campaign.id;
-    let BusinessTypeMapCode = mapCode;
+    let BusinessTypeMapCode = businessTypeId;
 
     Swal.fire({
       icon: "warning",
@@ -363,7 +363,7 @@ export class EditCampaignComponent implements OnInit {
     }).then((result) => {
 
       if (result.isConfirmed) {
-        this.campaignService.deleteCampaignBusinessType(campId, BusinessTypeMapCode)
+        this.campaignService.deleteCampaignBusinessType(campId, businessTypeId)
           .subscribe(response => {
             this.campaign = response;
 
