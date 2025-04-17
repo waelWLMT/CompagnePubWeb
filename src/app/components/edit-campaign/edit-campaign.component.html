@@ -136,8 +136,9 @@
                         <div class="row">
                             <div class="col-md">
                                 <app-edit-campaign-towns
+                                    [campaign]="campaign"
                                     [detailedCampaignTownsList]="detailedCampaignTownsList"
-                                    [CampaignRegion]= "campaign.region"
+                                    [campaignRegion]= "campaign.region"
                                     (deleteCampaignTownEmmiter)="deleteCampaignTown($event)"
                                     (addCampaignTownEmmiter)="addCampaigntown($event)">
                                 </app-edit-campaign-towns>

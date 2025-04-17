@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ListUserComponent } from './components/list-user/list-user.component';
@@ -23,6 +23,7 @@ import { DevisDetailsComponent } from './components/devis-details/devis-details.
 import { ListCampaignBusinessesComponent } from './components/list-campaign-businesses/list-campaign-businesses.component';
 import { ListFactureComponent } from './components/list-facture/list-facture.component';
 import { DetailsFactureComponent } from './components/details-product-type/details-facture/details-facture.component';
+import { CampaignTownDetailsComponent } from './components/campaign-town-details/campaign-town-details.component';
 
 
 const routes: Routes = [
@@ -50,10 +51,12 @@ const routes: Routes = [
   { path: 'Lst_Types_Produits', component : ListProductTypesComponent},
   {path: 'Details_ProductType/:ProductTypeId', component: DetailsProductTypeComponent},
   
-  {path: 'LstCampaign_Businesses/:CampaignId', component: ListCampaignBusinessesComponent},
+  { path: 'DetailsCampagneTown/campagne/:campagneId/town/:townId', component: CampaignTownDetailsComponent},
 
   {path: 'Lst_Factures_Compagnes', component: ListFactureComponent},
   {path: 'Frm_Facture_details/:CampaignId', component: DetailsFactureComponent},
+
+  {path: 'LstCampaign_Businesses/:CampaignId', component: ListCampaignBusinessesComponent},
   
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },

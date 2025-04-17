@@ -1,5 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SelectMultipleControlValueAccessor } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import * as L from 'leaflet';
+import { CampaignService } from 'src/app/services/campaign.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -9,12 +12,67 @@ import { SelectMultipleControlValueAccessor } from '@angular/forms';
 })
 export class CampaignTownDetailsComponent implements OnInit {
 
-  @Input() center: any[];
-  @Input() palcesList: any;
-
+  public detailesTown: any;
   public zoom: any;
-  constructor() { }
+  public map: any;
+  public mapCenter: any;
+  public campaignId: any;
+  public townId: any;
 
-  ngOnInit(): void {}
-  
+  constructor(private readonly activatedRoute: ActivatedRoute, private readonly campagnService: CampaignService) { }
+
+  ngOnInit(): void {
+    this.zoom = environment.townMapZoom;
+    this.getDetailesTown();
+  }
+
+  getDetailesTown() {
+    
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.campaignId = params.get('campagneId');
+      this.townId = params.get('townId');
+    });
+
+    this.campagnService.getDetailedCampaignTown(this.campaignId, this.townId)
+      .subscribe(response => {
+        this.detailesTown = response;
+        this.setMapCenter();
+        this.initMap();
+      });
+
+  }
+
+  setMapCenter(){    
+    this.mapCenter = {
+      lat : this.detailesTown.town.lat,
+      lng : this.detailesTown.town.lng
+    }
+  }
+
+  setMapView(){
+    this.map = L.map('map').setView([this.mapCenter.lat, this.mapCenter.lng], 6); // Centre France
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(this.map);
+  }
+
+  initMap() {
+    this.setMapView();
+    this.addPlacesToMap();
+  }
+
+  addPlacesToMap() {
+    // Ajouter les marqueurs
+    /* this.detailesTown.townBusinesses.forEach(lieu => {
+      L.marker([lieu.lat, lieu.lng])
+        .addTo(this.map)
+        .bindPopup(`<b>${lieu.name}</b>`);
+    }); */
+
+
+  }
+
+
+
+
 }

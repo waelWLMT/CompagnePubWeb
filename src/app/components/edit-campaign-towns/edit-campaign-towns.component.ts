@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Place } from 'src/app/models/Place';
 import { TownService } from 'src/app/services/town.service';
@@ -11,7 +12,8 @@ import { TownService } from 'src/app/services/town.service';
 export class EditCampaignTownsComponent implements OnInit, OnChanges {
 
   @Input() detailedCampaignTownsList: any; 
-  @Input() CampaignRegion: any;
+  @Input() campaignRegion: any;
+  @Input() campaign: any;
 
   @Output() deleteCampaignTownEmmiter = new EventEmitter<number>();
   @Output() addCampaignTownEmmiter = new EventEmitter<number>();
@@ -28,7 +30,7 @@ export class EditCampaignTownsComponent implements OnInit, OnChanges {
   public centerMapPosition: any;
   public placesList : any[];
   
-  constructor(private readonly townService: TownService) { }
+  constructor(private readonly townService: TownService, private readonly router: Router) { }
  
   ngOnChanges(changes: SimpleChanges): void {
 
@@ -65,9 +67,9 @@ export class EditCampaignTownsComponent implements OnInit, OnChanges {
   
   getListOfTowns(){    
     // region
-    if(this.CampaignRegion != undefined){
+    if(this.campaignRegion != undefined){
 
-      let regionId = this.CampaignRegion.id;
+      let regionId = this.campaignRegion.id;
       let fullEntity = false;
 
       this.townService.getTownsByRegion(regionId, fullEntity)
@@ -96,14 +98,17 @@ export class EditCampaignTownsComponent implements OnInit, OnChanges {
     this.selectedTownId = undefined;
   }
 
+  gotToTownPage(detailedTown){    
+    this.router.navigate(['DetailsCampagneTown/campagne/', this.campaign.id, 'town', detailedTown.town.id]);
+  }
+
   // modal params
   setModalTown(detailedTown){
     if(detailedTown != undefined){
       this.selectedTown = detailedTown;
       this.setCenterMapPosition();
       this.setPlacesList();
-    }
-      
+    }      
   }
 
   // set map center

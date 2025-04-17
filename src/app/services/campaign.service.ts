@@ -97,6 +97,14 @@ export class CampaignService {
 
   //#region Towns Services
 
+  getDetailedCampaignTown(campaignId, townId){
+    let url = this.apiUrl + '/Campaign/getDetailedCampaignTown';
+    url += '?campaignId=' + campaignId;
+    url += '&townId=' + townId;
+
+    return this.httpClient.get(url);
+  }
+
   getDetailedCampaignTownsList(campaignId) {
 
     let url = this.apiUrl + '/Campaign/getCampaignTownMap/';

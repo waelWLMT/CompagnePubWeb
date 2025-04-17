@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   apiUrl : 'http://localhost:5000/api',
-  campaignFilesSite :'http://localhost:88/'
+  campaignFilesSite :'http://localhost:88/',
+  townMapZoom : 13
 };
 
 /*
