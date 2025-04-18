@@ -1,9 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
-import { CampaignService } from 'src/app/services/campaign.service';
-import { environment } from 'src/environments/environment';
-
+import { Marker } from 'leaflet';
 
 @Component({
   selector: 'app-campaign-town-details',
@@ -12,67 +9,64 @@ import { environment } from 'src/environments/environment';
 })
 export class CampaignTownDetailsComponent implements OnInit {
 
-  public detailesTown: any;
-  public zoom: any;
-  public map: any;
-  public mapCenter: any;
-  public campaignId: any;
-  public townId: any;
+  @Input() details: any;
+  public maxzoom : any = 18;
+  public minzoom : any = 5;  
+  public centerzoom : any = 10;
+  public map: L.Map;
+  public centroid: L.LatLngExpression;
+  public markersList : any [];
 
-  constructor(private readonly activatedRoute: ActivatedRoute, private readonly campagnService: CampaignService) { }
+  public markerIcon = L.icon({
+    iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png'
+  });
 
   ngOnInit(): void {
-    this.zoom = environment.townMapZoom;
-    this.getDetailesTown();
+    this.initMap();
   }
 
-  getDetailesTown() {
-    
-    this.activatedRoute.paramMap.subscribe(params => {
-      this.campaignId = params.get('campagneId');
-      this.townId = params.get('townId');
+  initMapCenter(){
+    this.centroid = [+this.details.town.lat, +this.details.town.lng ];
+    console.log(+this.details.town.lat);
+    this.map = L.map('map', {
+      center: this.centroid,
+      zoom: this.centerzoom
+    });
+  }
+
+  initTiles(){
+    let tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: this.maxzoom,
+      minZoom: this.minzoom,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
 
-    this.campagnService.getDetailedCampaignTown(this.campaignId, this.townId)
-      .subscribe(response => {
-        this.detailesTown = response;
-        this.setMapCenter();
-        this.initMap();
-      });
-
+    return tiles;
   }
 
-  setMapCenter(){    
-    this.mapCenter = {
-      lat : this.detailesTown.town.lat,
-      lng : this.detailesTown.town.lng
-    }
+  initMarkersList(){
+
+    this.markersList = [];
+
+    this.details.townBusinesses.forEach(business => {      
+      this.markersList.push(L.marker([business.place.lat, business.place.lng], { icon: this.markerIcon }));
+    });
+    return this.markersList;
   }
 
-  setMapView(){
-    this.map = L.map('map').setView([this.mapCenter.lat, this.mapCenter.lng], 6); // Centre France
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(this.map);
+  addMarkersToMap(){
+    this.markersList.forEach(item => {
+      item.addTo(this.map);
+    })
   }
 
-  initMap() {
-    this.setMapView();
-    this.addPlacesToMap();
+  initMap(){
+
+    this.initMapCenter();
+    const tiles = this.initTiles();
+    this.initMarkersList();
+    this.addMarkersToMap();
+    tiles.addTo(this.map);
   }
-
-  addPlacesToMap() {
-    // Ajouter les marqueurs
-    /* this.detailesTown.townBusinesses.forEach(lieu => {
-      L.marker([lieu.lat, lieu.lng])
-        .addTo(this.map)
-        .bindPopup(`<b>${lieu.name}</b>`);
-    }); */
-
-
-  }
-
-
-
 
 }
