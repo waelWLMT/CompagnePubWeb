@@ -35,6 +35,15 @@ export class DevisService {
     return this.httpClient.get(url);
   }
 
+  getDevisReport(devisId) {
+    
+    let url = this.apiUrl + "/Quote/getDevisCampaigneReport"
+    url += "?devisId=" + devisId;    
+    return this.httpClient.get(url, { responseType: 'blob' });   
+     
+  }
+
+
   generateDevis(campaignId){
     
     let url = this.apiUrl+'/Devis/generateDevisCampaign/'; 
