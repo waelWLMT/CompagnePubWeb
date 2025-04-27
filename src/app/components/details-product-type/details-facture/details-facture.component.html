@@ -2,7 +2,7 @@
     <div class="col">
         <nav aria-label="breadcrumb ">
             <ol class="breadcrumb bgBreadCrumb">
-                <li class="breadcrumb-item"><a [routerLink]="['/tableauDeBord']">Home</a></li>                
+                <li class="breadcrumb-item"><a [routerLink]="['/tableauDeBord']">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Facture</li>
             </ol>
         </nav>
@@ -10,7 +10,7 @@
 </div>
 
 <div class="card mb-4 CompagneCard">
-
+    
 
     <!-- Loading Body -->
     <div class="card-body" *ngIf="!displayDetails">
@@ -106,7 +106,7 @@
             <div class="col-md" style="text-align: right">
 
                 <span class="detailsColLabel" style="text-align: left;">
-                     {{ pubCampanyTown }} le,
+                    {{ pubCampanyTown }} le,
                 </span>
 
                 <span class="detailsColValue badge">
@@ -132,7 +132,7 @@
                                     Liste des produits
                                 </span>
                             </th>
-                        </tr>                       
+                        </tr>
 
                         <tr style="background-color: #D3D3D3;">
                             <th scope="col">Type de produit</th>
@@ -149,7 +149,7 @@
                             <td>{{ product.productTypeName }}</td>
                             <td>{{ product.nbrProductPerBusiness }}</td>
                             <td>{{ product.finalUnitPrice | currency:'EUR':'symbol':'3.2-2':'fr' }}</td>
-                            <td>{{ product.costPerBusiness | currency:'EUR':'symbol':'3.2-2':'fr' }}</td>                            
+                            <td>{{ product.costPerBusiness | currency:'EUR':'symbol':'3.2-2':'fr' }}</td>
                         </tr>
 
                     </tbody>
@@ -162,15 +162,15 @@
         <!-- details Business types list-->
         <div class="row">
             <div class="col-md table-responsive">
-                <table class="table table-bordered" style="width: 100%;" cellspacing="0">
 
-                    <thead>                     
+                <table class="table table-bordered" style="width: 100%;" cellspacing="0">
+                    <thead>
 
                         <tr>
-                            <th colspan="4" style="text-align: left; border: none;" scope="col">  
+                            <th colspan="4" style="text-align: left; border: none;" scope="col">
                                 <span style="font-size: 25px; color: #707070;">
                                     Liste des business
-                                </span>                              
+                                </span>
                             </th>
 
                             <td style="border: none;">
@@ -180,7 +180,7 @@
                                 <span class="detailsColValue badge">
                                     {{ details.billBusinesses.length }}
                                 </span>
-                            </td>                            
+                            </td>
                             <td style="border: none;">
                                 <span class="detailsColLabel">
                                     Net à payer:
@@ -204,7 +204,8 @@
                     </thead>
 
                     <tbody>
-                        <tr *ngFor="let business of details.billBusinesses">
+                        <tr
+                            *ngFor="let business of details.billBusinesses | paginate: { itemsPerPage: nbrItemPerPage, currentPage: page }">
                             <td>{{ business.townName}}</td>
                             <td>{{ business.businessTypeName}}</td>
                             <td>{{ business.businessName}}</td>
@@ -212,12 +213,38 @@
                             <td>{{ business.lng}}</td>
                             <td>{{ business.businessCost | currency:'EUR':'symbol':'3.2-2':'fr' }}</td>
                         </tr>
-                        
+
                     </tbody>
 
                 </table>
             </div>
         </div>
+        
+        <!-- Line 5 Body Facture -->
+        <!-- Pagination -->
+        <div class="row">
+            <div class="col-md">
+                <pagination-controls (pageChange)="page = $event" class="float-right"></pagination-controls>
+            </div>
+        </div>
+
+        <!-- Line 5 Download Facture -->
+        <!-- Buttons-->
+        <div class="row">
+
+            <div class="col-md-9"></div>
+
+            <div class="col-md float-right">
+
+                <button type="button" class="btn btn-primary btn-sm btn-block" (click)="imprimer()">
+                    <i class="fa fa-print" aria-hidden="true"></i>
+                    Imprimer pdf
+                </button>
+
+            </div>
+        </div>
+
+
 
     </div>
 

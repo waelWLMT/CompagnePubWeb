@@ -7,9 +7,9 @@ import { environment } from 'src/environments/environment';
 })
 export class DevisService {
 
-  private apiUrl = environment.apiUrl;
+  private readonly apiUrl = environment.apiUrl;
   
-  constructor(private httpClient: HttpClient) { }
+  constructor(private readonly httpClient: HttpClient) { }
 
   validateDevis(campaignId){
    
@@ -41,6 +41,12 @@ export class DevisService {
     url += "?devisId=" + devisId;    
     return this.httpClient.get(url, { responseType: 'blob' });   
      
+  }
+
+  getDevisReportByCampagnId(campaignId){
+    let url = this.apiUrl + "/Quote/getDevisCampaigneReportByCampaignId"
+    url += "?campaignId=" + campaignId;    
+    return this.httpClient.get(url, { responseType: 'blob' }); 
   }
 
 

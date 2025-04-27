@@ -12,8 +12,10 @@ import Swal from 'sweetalert2';
 export class DetailsFactureComponent implements OnInit {
 
   public displayDetails: any;
-  public details:any;
-  public pubCampanyTown : string;
+  public details: any;
+  public pubCampanyTown: string;
+  public page: any = 1;
+  public nbrItemPerPage: any = 5;
 
   constructor(private readonly activatedRoute: ActivatedRoute, private readonly factureService: FactureService) { }
 
@@ -23,7 +25,7 @@ export class DetailsFactureComponent implements OnInit {
 
   }
 
-  getFactureByCampaignId(){
+  getFactureByCampaignId() {
     let campaignId = this.activatedRoute.snapshot.params.CampaignId;
     this.displayDetails = false;
 
@@ -38,15 +40,49 @@ export class DetailsFactureComponent implements OnInit {
     });
 
     this.factureService.getFactureByCampaignId(campaignId)
-    .subscribe(response=>{
+      .subscribe(response => {
         this.details = response;
         this.displayDetails = true;
         Swal.close();
-    },error=>{
-      console.log(error);
-    }
-    )
-    
+      }, error => {
+        console.log(error);
+      }
+      )
+
   }
 
+
+  imprimer() {
+
+    let campaignId = this.activatedRoute.snapshot.params.CampaignId;
+
+    Swal.fire({
+      title: '  Impression en cours!',
+      html: 'Veuillez patienter SVP',
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      willOpen: () => {
+        Swal.showLoading()
+      },
+    });
+
+    this.factureService.getFactureReportByCampagnId(campaignId).subscribe((response: Blob) => {
+
+
+      const blob = new Blob([response], { type: 'application/pdf' });
+      const fileURL = URL.createObjectURL(blob);
+
+      Swal.close();
+
+      // Ouvrir directement dans un nouvel onglet
+      window.open(fileURL, '_blank');
+
+      // Libère l'objet après un petit délai (optionnel mais propre)
+      setTimeout(() => URL.revokeObjectURL(fileURL), 5000);
+
+    }, error => {
+      console.error('Erreur lors du téléchargement du PDF', error);
+    });
+
+  }
 }

@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
   }
 
   verifAuthetificationIdentiy(userName, password) {
-
+    
 
     let valid = true;
     let msg = "";

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { DevisService } from 'src/app/services/devis.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-devis',
@@ -52,17 +53,30 @@ export class ListDevisComponent implements OnInit {
 
   imprimer(devisId) {
 
+    Swal.fire({
+      title: '  Impression en cours!',
+      html: 'Veuillez patienter SVP',
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      willOpen: () => {
+        Swal.showLoading()
+      },
+    });
+
+
     this.devisService.getDevisReport(devisId).subscribe((response: Blob) => {
 
       const blob = new Blob([response], { type: 'application/pdf' });
       const fileURL = URL.createObjectURL(blob);
+
+      Swal.close();
 
       // Ouvrir directement dans un nouvel onglet
       window.open(fileURL, '_blank');
 
       // Libère l'objet après un petit délai (optionnel mais propre)
       setTimeout(() => URL.revokeObjectURL(fileURL), 5000);
-      
+
     }, error => {
       console.error('Erreur lors du téléchargement du PDF', error);
     });

@@ -17,7 +17,7 @@ export class DetailedDevisCampaignComponent implements OnInit {
 
   public displayDetails: any = false;
   public campaignState: any;
-  public pubCampanyTown : string;
+  public pubCampanyTown: string;
 
   public campaignStates = [
     { stateId: 1, stateDescription: 'Brouillon' },
@@ -37,6 +37,39 @@ export class DetailedDevisCampaignComponent implements OnInit {
     this.pubCampanyTown = environment.PubCampanyCity;
   }
 
+  imprimer() {
+
+
+    Swal.fire({
+      title: '  Impression en cours!',
+      html: 'Veuillez patienter SVP',
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      willOpen: () => {
+        Swal.showLoading()
+      },
+    });
+
+    this.devisService.getDevisReportByCampagnId(this.campaign.id).subscribe((response: Blob) => {
+
+
+      const blob = new Blob([response], { type: 'application/pdf' });
+      const fileURL = URL.createObjectURL(blob);
+
+      Swal.close();
+
+      // Ouvrir directement dans un nouvel onglet
+      window.open(fileURL, '_blank');
+
+      // Libère l'objet après un petit délai (optionnel mais propre)
+      setTimeout(() => URL.revokeObjectURL(fileURL), 5000);
+
+    }, error => {
+      console.error('Erreur lors du téléchargement du PDF', error);
+    });
+
+  }
+
   ValiderDevis() {
 
     Swal.fire({
@@ -44,8 +77,8 @@ export class DetailedDevisCampaignComponent implements OnInit {
       text: "Êtes-vous sure de vouloir continuer?",
       icon: "warning",
       showConfirmButton: true,
-      confirmButtonText:"Oui, Continuer",
-      denyButtonText:"Non, Annuler",
+      confirmButtonText: "Oui, Continuer",
+      denyButtonText: "Non, Annuler",
       showDenyButton: true
     }).then((result) => {
       if (result.value) {
@@ -74,7 +107,7 @@ export class DetailedDevisCampaignComponent implements OnInit {
               timer: 2500,
               showConfirmButton: true
             }).then(() => {
-              this.router.navigateByUrl('Frm_Facture_details/'+ campaignId );
+              this.router.navigateByUrl('Frm_Facture_details/' + campaignId);
             });
 
           });
@@ -86,8 +119,8 @@ export class DetailedDevisCampaignComponent implements OnInit {
 
   }
 
-  countBusinessTypeInCampaign(businessType){  
-    let list = this.campaign.campaignBusinesses.filter(x=> x.businessTypeId == businessType.id);
+  countBusinessTypeInCampaign(businessType) {
+    let list = this.campaign.campaignBusinesses.filter(x => x.businessTypeId == businessType.id);
     return list.length;
   }
 

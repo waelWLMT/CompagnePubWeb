@@ -28,6 +28,15 @@ export class FactureService {
     return this.httpClient.get(url);
   }
 
+  getFactureReportByCampagnId(campaignId){
+    
+    let url = this.apiUrl + "/Bill/getFactureReportByCampagnId"
+    url += "?campaignId=" + campaignId;    
+    
+    return this.httpClient.get(url, { responseType: 'blob' });  
+     
+  }
+
   getFacutreReport(devisId) {
     
     let url = this.apiUrl + "/Bill/GetFactureReport"
