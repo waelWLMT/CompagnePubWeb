@@ -7,9 +7,9 @@ import { environment } from 'src/environments/environment';
 })
 export class BusinessTypeService {
 
-  private apiUrl = environment.apiUrl;
+  private readonly apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   getAllBusinessTypes() {
     let url = this.apiUrl + "/BusinessType/";
