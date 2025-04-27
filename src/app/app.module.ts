@@ -51,6 +51,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
+import { ListTownBusinessesComponent } from './components/list-town-businesses/list-town-businesses.component';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -86,7 +87,8 @@ registerLocaleData(localeFr, 'fr');
     ListCampaignBusinessesComponent,
     ListFactureComponent,
     DetailsFactureComponent,
-    GalleryComponent
+    GalleryComponent,
+    ListTownBusinessesComponent
   ],
 
   imports: [

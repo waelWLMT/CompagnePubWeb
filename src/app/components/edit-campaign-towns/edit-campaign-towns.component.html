@@ -55,7 +55,7 @@
           <td class="deleteIcon" style="cursor: pointer;" (click)='deleteCampaigntown(detailedTown.town)'>
             <i class="fa fa-trash" aria-hidden="true"></i>
           </td>
-         
+
           <td class="linkBtn show-map-link-btn" data-toggle="modal" data-target="#myModal"
             (click)='setModalTown(detailedTown)'>
             <i class="fas fa-map"></i>
@@ -81,9 +81,42 @@
       </div>
 
       <!-- Modal body -->
-      <div class="modal-body" >        
-        <app-campaign-town-details [details]="selectedTown">          
-        </app-campaign-town-details>
+      <div class="modal-body">
+
+        <!-- btn show map show liste-->
+        <div class="row">
+          <div class="col-md">
+
+            <button *ngIf="dispalyMap" type="button" class="btn btn-light" style="margin-left: 1%;" (click)="showMap()">
+              <i class="fa fa-table" aria-hidden="true"></i> Liste
+            </button>
+
+            <button *ngIf="!dispalyMap" type="button" class="btn btn-light" style="margin-left: 1%;"
+              (click)="showMap()">
+              <i class="fa fa-table" aria-hidden="true"></i> Carte
+            </button>
+
+          </div>
+
+        </div>
+
+        <!--[hidden]="dispalyMap"-->
+        <div *ngIf="!dispalyMap"  class="row" style="height: 100%; text-align: center;">
+          <div class="col-md" style="margin-top: 1%;">
+            <app-list-town-businesses [businesses]="placesList">
+            </app-list-town-businesses>
+          </div>
+        </div>
+
+        <!-- show busnisses in map-->
+         <!--[hidden]="!dispalyMap"-->
+        <div *ngIf="dispalyMap" class="row" style="height: 100%; text-align: center;">
+          <div class="col-md">
+            <app-campaign-town-details [details]="selectedTown">
+            </app-campaign-town-details>
+          </div>
+        </div>
+
       </div>
 
       <!-- Modal footer -->

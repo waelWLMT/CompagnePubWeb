@@ -4,4 +4,7 @@ export interface Place {
 	lng: number;
 	label?: string;
 	draggable: boolean;
+	fullAdresse?: string;
+	businessTypeLibelle?: string;
+	businessId?: number
 }

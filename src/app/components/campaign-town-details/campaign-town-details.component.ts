@@ -26,8 +26,7 @@ export class CampaignTownDetailsComponent implements OnInit {
   }
 
   initMapCenter(){
-    this.centroid = [+this.details.town.lat, +this.details.town.lng ];
-    console.log(+this.details.town.lat);
+    this.centroid = [+this.details.town.lat, +this.details.town.lng ];  
     this.map = L.map('map', {
       center: this.centroid,
       zoom: this.centerzoom

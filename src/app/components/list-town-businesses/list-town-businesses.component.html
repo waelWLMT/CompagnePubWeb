@@ -1,0 +1,50 @@
+<div class="row">
+
+    <div class="col-md table-responsive">
+
+        <table class="table table-bordered" width="100%" cellspacing="0">
+
+            <thead>
+                <tr style="text-align: center;">
+                    <th>Nom</th>
+                    <th>Type de business</th>
+                    <th>Adresse</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr *ngIf="showListPlaces && places.length == 0">
+                    <td colspan="3" style="text-align: center;">Aucun élément à afficher</td>
+                </tr>
+
+                <tr *ngIf="!showListPlaces">
+                    <td colspan="3" style="text-align: center;">
+                        <div class="spinner-grow" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div>
+                            <p>Loading...</p>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr *ngFor="let business of places | paginate: { itemsPerPage: nbrItemPerPage, currentPage: page }">
+                    <td>{{ business.label }}</td>
+                    <td>{{ business.businessTypeLibelle }}</td>
+                    <td>{{ business.fullAdresse }}</td>                    
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md">
+        <pagination-controls (pageChange)="page = $event" class="float-right"></pagination-controls>
+    </div>
+</div>
