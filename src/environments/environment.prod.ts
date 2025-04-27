@@ -3,6 +3,6 @@ export const environment = {
   prodApiUrl : 'http://localhost:5000/api',
   //campaignFilesSite :'http://localhost:8080/Campaigns/'
   campaignFilesSite :'http://localhost:6000/',
-  townMapZoom: 13
-
+  townMapZoom: 13,
+  PubCampanyCity : 'Paris'
 };

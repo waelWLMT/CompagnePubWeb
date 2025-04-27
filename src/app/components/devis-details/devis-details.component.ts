@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DevisService } from 'src/app/services/devis.service';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,11 +13,13 @@ export class DevisDetailsComponent implements OnInit {
 
   public displayDetails: any;
   public details:any;
+  public pubCampanyTown: any;
 
   constructor(private readonly activatedRoute: ActivatedRoute, private readonly devisService: DevisService) { }
 
   ngOnInit(): void {
     this.getDevisDetails();
+    this.pubCampanyTown = environment.PubCampanyCity;
   }
 
   getDevisDetails(){

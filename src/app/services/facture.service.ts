@@ -28,6 +28,15 @@ export class FactureService {
     return this.httpClient.get(url);
   }
 
+  getFacutreReport(devisId) {
+    
+    let url = this.apiUrl + "/Bill/GetFactureReport"
+    url += "?billId=" + devisId;    
+    
+    return this.httpClient.get(url, { responseType: 'blob' });   
+     
+  }
+
   
 
 

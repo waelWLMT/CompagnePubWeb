@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FactureService } from 'src/app/services/facture.service';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,11 +13,14 @@ export class DetailsFactureComponent implements OnInit {
 
   public displayDetails: any;
   public details:any;
+  public pubCampanyTown : string;
 
-  constructor(private activatedRoute: ActivatedRoute, private factureService: FactureService) { }
+  constructor(private readonly activatedRoute: ActivatedRoute, private readonly factureService: FactureService) { }
 
   ngOnInit(): void {
     this.getFactureByCampaignId();
+    this.pubCampanyTown = environment.PubCampanyCity;
+
   }
 
   getFactureByCampaignId(){

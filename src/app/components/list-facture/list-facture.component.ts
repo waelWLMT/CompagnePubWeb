@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DevisService } from 'src/app/services/devis.service';
 import { FactureService } from 'src/app/services/facture.service';
 
 @Component({
@@ -56,6 +57,25 @@ export class ListFactureComponent implements OnInit {
 
   goToDetails(campaignId){        
     this.router.navigateByUrl('Frm_Facture_details/'+ campaignId);
+  }
+
+  imprimer(factureId) {
+
+    this.factureService.getFacutreReport(factureId).subscribe((response: Blob) => {
+
+      const blob = new Blob([response], { type: 'application/pdf' });
+      const fileURL = URL.createObjectURL(blob);
+
+      // Ouvrir directement dans un nouvel onglet
+      window.open(fileURL, '_blank');
+
+      // Libère l'objet après un petit délai (optionnel mais propre)
+      setTimeout(() => URL.revokeObjectURL(fileURL), 5000);
+      
+    }, error => {
+      console.error('Erreur lors du téléchargement du PDF', error);
+    });
+
   }
 
 }

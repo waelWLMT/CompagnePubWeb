@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CampaignService } from 'src/app/services/campaign.service';
 import { DevisService } from 'src/app/services/devis.service';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,6 +17,7 @@ export class DetailedDevisCampaignComponent implements OnInit {
 
   public displayDetails: any = false;
   public campaignState: any;
+  public pubCampanyTown : string;
 
   public campaignStates = [
     { stateId: 1, stateDescription: 'Brouillon' },
@@ -32,6 +34,7 @@ export class DetailedDevisCampaignComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFileCampaign();
+    this.pubCampanyTown = environment.PubCampanyCity;
   }
 
   ValiderDevis() {
