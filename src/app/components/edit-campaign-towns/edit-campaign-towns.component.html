@@ -99,8 +99,7 @@
           </div>
 
         </div>
-
-        <!--[hidden]="dispalyMap"-->
+       
         <div *ngIf="!dispalyMap"  class="row" style="height: 100%; text-align: center;">
           <div class="col-md" style="margin-top: 1%;">
             <app-list-town-businesses [businesses]="placesList">
@@ -108,11 +107,10 @@
           </div>
         </div>
 
-        <!-- show busnisses in map-->
-         <!--[hidden]="!dispalyMap"-->
+        <!-- show busnisses in map-->        
         <div *ngIf="dispalyMap" class="row" style="height: 100%; text-align: center;">
           <div class="col-md">
-            <app-campaign-town-details [details]="selectedTown">
+            <app-campaign-town-details [details]="selectedTown" [businessTypes]="campaign.campaignBusinessTypes">
             </app-campaign-town-details>
           </div>
         </div>
