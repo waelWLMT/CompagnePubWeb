@@ -1,7 +1,6 @@
 export const environment = {
   production: true,
-  prodApiUrl : 'http://localhost:5000/api',
-  //campaignFilesSite :'http://localhost:8080/Campaigns/'
+  apiUrl: "http://localhost:53572/api",    
   campaignFilesSite :'http://localhost:6000/',
   townMapZoom: 13,
   PubCampanyCity : 'Paris'

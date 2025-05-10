@@ -77,7 +77,7 @@
                   *ngFor="let business of campaignBusinesses | filter:searchCreteria  | paginate: { itemsPerPage: nbrItemPerPage, currentPage: page }">
 
                   <td> {{ business.townName }}</td>
-                  <td style="width: 15%;"> {{ business.busninessTypeName }} </td>
+                  <td style="width: 15%;"> {{ business.businessType.tagValueDesignation }} </td>
                   <td style="width: 30%;">{{ business.businessName }}</td>
                   <td>{{ business.place.lat }}</td>
                   <td>{{ business.place.lng }}</td>
@@ -149,7 +149,7 @@
       <div class="modal-body">
        
         <div class="row" >
-          <div class="col-md">
+          <div class="col-md" style="height: 80%;">
             <app-gallery [business]= "selectedBusiness" [campaignId]= "selectedCampaignId"></app-gallery>
           </div>         
         </div>        
@@ -196,7 +196,7 @@
 
                     <div class="form-group col-md">
 
-                      <label class="control-label required" for="taxIdNumber">Type de business</label>
+                      <label class="control-label required" for="businessType">Type de business</label>
                       <input type="text" class="form-control username" [value]="modalBusiness.businessTypeName"
                         id="businessTypeName" name="businessTypeName" disabled>
 
