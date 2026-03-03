@@ -1,0 +1,7 @@
+services:
+  frontend-compagne:
+    build: ./
+    container_name: campaign_web-app    
+    ports:
+      - 5000:80
+    restart: unless-stopped
